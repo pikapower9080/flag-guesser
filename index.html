@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <link rel="icon" href="favicon.ico">
+    <title>Flag Guesser</title>
+</head>
+<body>
+    <div class="screen" id="welcome">
+        <h1>Flag Guesser</h1>
+        <h2>Customize the game, then click play!</h2>
+        <!-- <div id="customize-container">
+            <h3>Customize Game</h3>
+            <fieldset>
+                <legend>Number of options:</legend>
+                <input type="radio" name="options" id="opt-2"><label for="opt-2"> 2</label><br>
+                <input type="radio" name="options" id="opt-4" checked><label for="opt-4"> 4</label><br>
+                <input type="radio" name="options" id="opt-6"><label for="opt-6"> 6</label><br>
+            </fieldset>
+        </div> -->
+        <button class="play" id="play-btn">Play!</button>
+    </div>
+    <div class="screen" id="guess" style="display: none;">
+        <img id="flag-svg" draggable="false" class="no-select">
+        <div id="options">
+        </div>
+    </div>
+    <script defer src="dist/main.js"></script>
+</body>
+</html>

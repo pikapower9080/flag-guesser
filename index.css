@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@500&family=Open+Sans&display=swap');
+
+:root {
+    --bg: rgb(237, 237, 237);
+}
+
+body {
+    background-color: var(--bg);
+    overflow: hidden;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.screen {
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+    position: fixed;
+    left: 0;
+    top: 0;
+    text-align: center;
+}
+
+h1, h2, h3 {
+    font-family: 'Alexandria', sans-serif;
+}
+
+#customize-container {
+    border: 1px lightgray solid;
+    border-radius: 4px;
+    max-width: 70%;
+    text-align: left;
+}
+
+button {
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 20px;
+    min-width: 100px;
+    cursor: pointer;
+    border: none;
+}
+
+.play {
+    background-color: rgb(7, 187, 7);
+    color: white;
+}
+.play:active {
+    background-color: rgb(7, 175, 7);
+}
+
+#flag-svg {
+    max-width: 35vw;
+    padding: 10px;
+}
+
+#options {
+    column-count: 2;
+    width: 100vw;
+    left: 0;
+}
+
+.option {
+    width: 95%;
+    display: inline;
+    margin-bottom: 5px;
+    height: 50px;
+}
+
+.no-select {
+    user-select: none;
+}
