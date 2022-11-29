@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="node_modules/tippy.js/dist/tippy.css">
+    <link rel="stylesheet" href="node_modules/tippy.js/animations/shift-away-subtle.css">
     <link rel="icon" href="favicon.ico">
     <title>Flag Guesser</title>
 </head>
@@ -12,18 +14,42 @@
     <div class="screen" id="welcome">
         <h1>Flag Guesser</h1>
         <h2>Customize the game, then click play!</h2>
-        <!-- <div id="customize-container">
+        <div id="customize-container">
             <h3>Customize Game</h3>
             <fieldset>
-                <legend>Number of options:</legend>
-                <input type="radio" name="options" id="opt-2"><label for="opt-2"> 2</label><br>
-                <input type="radio" name="options" id="opt-4" checked><label for="opt-4"> 4</label><br>
-                <input type="radio" name="options" id="opt-6"><label for="opt-6"> 6</label><br>
+                <legend>Game mode:</legend>
+                <input type="radio" name="mode" id="questions"><label for="questions" class="label-block" id="questions-label">Questions</label>
+                <input type="radio" name="mode" id="streak" checked><label for="streak" class="label-block" id="streak-label">Streak</label>
+                <input type="radio" name="mode" id="endless"><label for="endless" class="label-block" id="endless-label">Endless</label>
+                <fieldset id="questions-set" class="hidden" style="margin-top: 8px;">
+                    <legend>Number of questions:</legend>
+                    <input type="radio" name="questions" id="q-5"><label for="q-5" class="label-block">5</label>
+                    <input type="radio" name="questions" id="q-10" checked><label for="q-10" class="label-block">10</label>
+                    <input type="radio" name="questions" id="q-15"><label for="q-15" class="label-block">15</label>
+                    <input type="radio" name="questions" id="q-20"><label for="q-20" class="label-block">20</label>
+                </fieldset>
             </fieldset>
-        </div> -->
+            <fieldset>
+                <legend>Number of options:</legend>
+                <!-- <input type="radio" name="options" id="opt-2"><label for="opt-2" class="label-block">2</label> -->
+                <input type="radio" name="options" id="opt-4" checked><label for="opt-4" class="label-block">4</label>
+                <input type="radio" name="options" id="opt-6"><label for="opt-6" class="label-block">6</label>
+                <input type="radio" name="options" id="opt-8"><label for="opt-8" class="label-block">8</label>
+            </fieldset>
+            <fieldset>
+                <legend>Difficulty:</legend>
+                <input type="radio" name="difficulty" id="easy"><label for="easy" id="easy-label">Easy</label>
+                <input type="radio" name="difficulty" id="normal" checked><label for="normal" id="normal-label">Normal</label>
+                <input type="radio" name="difficulty" id="expert"><label for="expert" id="expert-label">Expert</label>
+            </fieldset>
+        </div>
         <button class="play" id="play-btn">Play!</button>
     </div>
     <div class="screen" id="guess" style="display: none;">
+        <div id="progress-container">
+            <div id="progress-fill"></div>
+        </div>
+        <h2 id="streak-progress">Streak: 0</h2>
         <img id="flag-svg" draggable="false" class="no-select">
         <div id="options">
         </div>

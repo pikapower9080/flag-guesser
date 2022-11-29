@@ -1,16 +1,30 @@
 import { Report } from 'notiflix/build/notiflix-report-aio';
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
+import { getDataUrl, getUserOptions } from './options';
+import './tooltips'
+import './options'
+import strings from './strings'
 
 Report.init({})
 
 let started = false
 let optionCount = 4
 let data = {}
-let nextCountryReady = true
 let currentCountry; // grr no cheating
-let dataUrl = "data/expert-opt.json"
-const flagApiEndpoint = "https://countryflagsapi.com/svg/"
+let previousCountry;
+let questionNum = 0
+let questionCount = 10
+let score = 0
+let canContinue = true
+const flagApiEndpoint = "flags/" // ignore the variable name XD
 const flagFallbackUrlStart = "https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/"
+const useFallback = ["AC","CP","DG","EA","IC","TA"] // Flags that need to use the simplified style
+let progressBarPercent = 0
+let userOptions = {}
+let streak = 0
+
+const progressBar = document.getElementById("progress-fill")
+const streakProgress = document.getElementById("streak-progress")
 
 function showUserError(errorM) {
     Loading.remove()
@@ -36,23 +50,41 @@ function clearOptions() {
     })
 }
 
+function returnToHome() {
+    started = false
+    currentCountry = null
+    previousCountry = null
+    questionNum = 0
+    progressBarPercent = 0
+    score = 0
+    streak = 0
+    hideAllScreens()
+    document.getElementById("welcome").style.display = "unset"
+}
+
 const guessScreen = document.getElementById("guess")
 const flagSvg = document.getElementById("flag-svg")
 const optionsDiv = document.getElementById("options")
 
-flagSvg.addEventListener("error", () => {
-    flagSvg.src = flagFallbackUrlStart + currentCountry.image
-})
-
 function guessFor(country) {
     let options = []
     currentCountry = country
-    flagSvg.src = flagApiEndpoint + country.code
+    if (currentCountry == previousCountry) {
+        guessFor(randomCountry())
+        return
+    }
+    if (useFallback.includes(country.code)) {
+        flagSvg.src = flagFallbackUrlStart + country.image
+    } else {
+        flagSvg.src = flagApiEndpoint + country.code + ".svg"
+    }
     clearOptions()
     function pick() {
         const rCountry = randomCountry()
-        if (options.includes(rCountry.name)) { // No duplicates!
-            return pick()
+        if (options.includes(rCountry.name) || rCountry.name == country.name) { // No duplicates!
+            console.debug("Duplicate detected: " + rCountry.name)
+            pick()
+            return
         }
         options.push(rCountry.name)
     }
@@ -60,20 +92,60 @@ function guessFor(country) {
         pick()
     }
     // Add correct option randomly
-    options.splice(Math.floor(Math.random() * options.length + 1), 0, country.name)
+    options.splice(Math.floor(Math.random() * options.length), 0, country.name)
     options.forEach((option) => {
         let btn = document.createElement("button")
         btn.className = "option"
         btn.innerText = option
         optionsDiv.appendChild(btn)
+        function moveOn() {
+            questionNum ++
+            progressBarPercent = (100 * questionNum) / questionCount
+            progressBar.style.width = progressBarPercent + "%"
+            previousCountry = country
+            if (questionNum + 1 > questionCount && userOptions.mode == "questions") { // I have no idea why I had to put +2
+                console.log("Time to end the game!")
+                setTimeout(() => {
+                    hideAllScreens()
+                    if(((100 * score) / questionCount) > 50) {
+                        Report.info("Game Complete!", strings.questionsFinish[Math.floor(Math.random() * strings.questionsFinish.length)].replace("%%", score).replace("%%", questionCount), "Finish", returnToHome)
+                    } else {
+                        Report.info("Game Complete!", strings.questionsFail[Math.floor(Math.random() * strings.questionsFail.length)].replace("%%", score).replace("%%", questionCount), "Finish", returnToHome)
+                    }
+                }, 370) // wait for the popup to animate out
+            } else {
+                guessFor(randomCountry())
+            }
+        }
+        function processCanContinue() {
+            canContinue = false
+            setTimeout(() => {
+                canContinue = true
+            }, 370)
+        }
         btn.addEventListener("click", () => {
             if (option == country.name) { // YAY IT'S CORRECT!!!! LET'S GO!!!
-                Report.success("Correct!", "", "Next Question", () => {
-                    guessFor(randomCountry())
+                streak ++
+                streakProgress.innerText = `Streak: ${streak}`
+                Report.success("Correct!", userOptions.mode == "streak" ? strings.streakCorrectMessages[Math.floor(Math.random() * strings.streakCorrectMessages.length)].replaceAll("%%", streak) : "", "Next Question", () => {
+                    if (!canContinue) return
+                    processCanContinue()
+                    score ++
+                    moveOn()
                 })
             } else { // YOU'RE WRONG XD GET TROLLED
-                Report.failure("Incorrect", "The correct answer was " + country.name + ".", "Next Question", () => {
-                    guessFor(randomCountry())
+                if (userOptions.mode == "streak") {
+                    Report.failure("Streak lost!", strings.loseStreakMessages[Math.floor(Math.random() * strings.loseStreakMessages.length)].replaceAll("%%", streak), "Exit Game", () => {
+                        if (!canContinue) return
+                        processCanContinue()
+                        return returnToHome()
+                    })
+                }
+                Report.failure("Incorrect", strings.incorrectEndlessMessages[Math.floor(Math.random() * strings.incorrectEndlessMessages.length)].replaceAll("%%", country.name), "Next Question", () => {
+                    if (!canContinue) return
+                    processCanContinue()
+                    moveOn()
+                    previousCountry = country
                 })
             }
         })
@@ -83,14 +155,31 @@ function guessFor(country) {
 function start() {
     if (started) return
     started = true
+    userOptions = getUserOptions()
+    optionCount = userOptions.options.split("opt-")[1]
+    questionCount = userOptions.questions.split("q-")[1]
+    console.log("Data url: " + getDataUrl())
+    console.log("Option count: " + optionCount)
+    if (userOptions.mode !== "questions") {
+        progressBar.parentElement.style.display = "none"
+    } else {
+        progressBar.parentElement.setAttribute("style", '')
+    }
+    if (userOptions.mode !== "streak") {
+        streakProgress.style.display = "none"
+    } else {
+        streakProgress.style.display = "block"
+    }
+    streakProgress.innerText = `Streak: ${streak}`
     Loading.circle('Fetching data...')
-    fetch(dataUrl).then((res) => {
+    fetch(getDataUrl()).then((res) => {
         Loading.change('Parsing data...')
         res.json().then((fetchedData) => {
             data = fetchedData
             Loading.remove()
             hideAllScreens()
             guessScreen.style.display = "unset"
+            progressBar.style.width = progressBarPercent + "%"
             guessFor(randomCountry())
         }).catch(showUserError)
     }).catch(showUserError)
