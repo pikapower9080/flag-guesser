@@ -4,7 +4,8 @@
   "description": " A vanilla js web game about guessing world flags ",
   "main": "index.js",
   "scripts": {
-    "build": "webpack"
+    "build": "MODE='production' webpack",
+    "dev": "MODE='development' webpack --watch"
   },
   "repository": {
     "type": "git",
