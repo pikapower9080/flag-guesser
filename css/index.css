@@ -76,6 +76,17 @@ button {
     left: 0;
 }
 
+#close-btn {
+    width: 43px;
+    height: 43px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    margin: 5px;
+    margin-top: 0px;
+}
+
 .option {
     width: 95%;
     display: inline;
@@ -113,7 +124,7 @@ input[type="radio"]:checked + label {
 }
 
 #progress-container {
-    width: calc(100% - 50px);
+    width: calc(100% - 85px);
     height: 15px;
     margin: 10px;
     margin-inline: 25px;
@@ -145,6 +156,6 @@ input[type="radio"]:checked + label {
     display: none;
 }
 
-#streak-progress {
+#streak-container {
     color: rgb(255, 128, 0);
 }

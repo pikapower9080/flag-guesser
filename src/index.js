@@ -23,9 +23,11 @@ const useFallback = ["AC","CP","DG","EA","IC","TA"] // Flags that need to use th
 let progressBarPercent = 0
 let userOptions = {}
 let streak = 0
+let unsavedChanges = false
 
 const progressBar = document.getElementById("progress-fill")
-const streakProgress = document.getElementById("streak-num")
+const streakNum = document.getElementById("streak-num")
+const streakContainer = document.getElementById("streak-container")
 
 function showUserError(errorM) {
     Loading.remove()
@@ -59,6 +61,7 @@ function returnToHome() {
     progressBarPercent = 0
     score = 0
     streak = 0
+    unsavedChanges = false
     hideAllScreens()
     document.getElementById("welcome").style.display = "unset"
 }
@@ -128,7 +131,7 @@ function guessFor(country) {
         btn.addEventListener("click", () => {
             if (option == country.name) { // YAY IT'S CORRECT!!!! LET'S GO!!!
                 streak ++
-                streakProgress.innerText = streak
+                streakNum.innerText = streak
                 Report.success("Correct!", userOptions.mode == "streak" ? strings.streakCorrectMessages[Math.floor(Math.random() * strings.streakCorrectMessages.length)].replaceAll("%%", streak) : "", "Next Question", () => {
                     if (!canContinue) return
                     processCanContinue()
@@ -170,17 +173,18 @@ function start() {
     console.log("Data url: " + getDataUrl())
     console.log("Option count: " + optionCount)
     incrementStat('totalGames')
+    unsavedChanges = true
     if (userOptions.mode !== "questions") {
         progressBar.parentElement.style.display = "none"
     } else {
         progressBar.parentElement.setAttribute("style", '')
     }
     if (userOptions.mode !== "streak") {
-        streakProgress.style.display = "none"
+        streakContainer.style.display = "none"
     } else {
-        streakProgress.style.display = "inline"
+        streakContainer.style.display = "block"
     }
-    streakProgress.innerText = streak
+    streakNum.innerText = streak
     Loading.circle('Fetching data...')
     fetch(getDataUrl()).then((res) => {
         Loading.change('Parsing data...')
@@ -203,4 +207,16 @@ window.addEventListener("keydown", (e) => {
     }
 })
 
+// Show the unsaved changes prompt
+window.addEventListener('beforeunload', event => {
+    if (unsavedChanges) {
+        event.returnValue = true
+    }
+})
+
+document.getElementById("close-btn").addEventListener("click", () => {
+    if (confirm("Are you sure? Current progress will be lost!")) {
+        returnToHome()
+    }
+})
 document.getElementById('play-btn').addEventListener("click", start)
