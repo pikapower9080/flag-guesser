@@ -135,18 +135,18 @@ function guessFor(country) {
                 })
             } else { // YOU'RE WRONG XD GET TROLLED
                 if (userOptions.mode == "streak") {
-                    Report.failure("Streak lost!", strings.loseStreakMessages[Math.floor(Math.random() * strings.loseStreakMessages.length)].replaceAll("%%", streak), "Exit Game", () => {
+                    Report.failure("Streak lost!", `<b>Correct Answer: ${country.name} </b><br><br>` + strings.loseStreakMessages[Math.floor(Math.random() * strings.loseStreakMessages.length)].replaceAll("%%", streak), "Exit Game", () => {
                         if (!canContinue) return
                         processCanContinue()
                         return returnToHome()
-                    })
+                    }, {plainText: false})
                 }
-                Report.failure("Incorrect", strings.incorrectEndlessMessages[Math.floor(Math.random() * strings.incorrectEndlessMessages.length)].replaceAll("%%", country.name), "Next Question", () => {
+                Report.failure("Incorrect", strings.incorrectEndlessMessages[Math.floor(Math.random() * strings.incorrectEndlessMessages.length)].replaceAll("%%", '<b>' + country.name + '</b>'), "Next Question", () => {
                     if (!canContinue) return
                     processCanContinue()
                     moveOn()
                     previousCountry = country
-                })
+                }, {plainText: false})
             }
         })
     })
