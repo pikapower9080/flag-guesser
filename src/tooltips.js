@@ -6,8 +6,7 @@ const tooltipsById = {
     "expert-label": "Almost every country and territory is included, only for geography super nerds",
     "endless-label": "Keep going forever and ever, no consequences",
     "questions-label": "Ask an arbitrary number of questions before the game is over and you get a score",
-    "streak-label": "Keep playing and growing your streak until you get a question wrong",
-    "test-label": "Testing tooltips."
+    "streak-label": "Keep playing and growing your streak until you get a question wrong"
 }
 
 for (let elementId in tooltipsById) {

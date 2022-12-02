@@ -1,6 +1,7 @@
 import { Report } from 'notiflix/build/notiflix-report-aio';
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
 import { getDataUrl, getUserOptions } from './options';
+import { incrementStat, updateStat, getStat } from './statistics';
 import './tooltips'
 import './options'
 import strings from './strings'
@@ -24,7 +25,7 @@ let userOptions = {}
 let streak = 0
 
 const progressBar = document.getElementById("progress-fill")
-const streakProgress = document.getElementById("streak-progress")
+const streakProgress = document.getElementById("streak-num")
 
 function showUserError(errorM) {
     Loading.remove()
@@ -103,6 +104,7 @@ function guessFor(country) {
             progressBarPercent = (100 * questionNum) / questionCount
             progressBar.style.width = progressBarPercent + "%"
             previousCountry = country
+            incrementStat('totalQuestions')
             if (questionNum + 1 > questionCount && userOptions.mode == "questions") { // I have no idea why I had to put +2
                 console.log("Time to end the game!")
                 setTimeout(() => {
@@ -126,10 +128,11 @@ function guessFor(country) {
         btn.addEventListener("click", () => {
             if (option == country.name) { // YAY IT'S CORRECT!!!! LET'S GO!!!
                 streak ++
-                streakProgress.innerText = `Streak: ${streak}`
+                streakProgress.innerText = streak
                 Report.success("Correct!", userOptions.mode == "streak" ? strings.streakCorrectMessages[Math.floor(Math.random() * strings.streakCorrectMessages.length)].replaceAll("%%", streak) : "", "Next Question", () => {
                     if (!canContinue) return
                     processCanContinue()
+                    incrementStat('totalCorrect')
                     score ++
                     moveOn()
                 })
@@ -138,12 +141,18 @@ function guessFor(country) {
                     Report.failure("Streak lost!", `<b>Correct Answer: ${country.name} </b><br><br>` + strings.loseStreakMessages[Math.floor(Math.random() * strings.loseStreakMessages.length)].replaceAll("%%", streak), "Exit Game", () => {
                         if (!canContinue) return
                         processCanContinue()
+                        incrementStat('totalQuestions')
+                        incrementStat('totalIncorrect')
+                        if (getStat('streak') < streak) {
+                            updateStat('streak', streak)
+                        }
                         return returnToHome()
                     }, {plainText: false})
                 }
                 Report.failure("Incorrect", strings.incorrectEndlessMessages[Math.floor(Math.random() * strings.incorrectEndlessMessages.length)].replaceAll("%%", '<b>' + country.name + '</b>'), "Next Question", () => {
                     if (!canContinue) return
                     processCanContinue()
+                    incrementStat('totalIncorrect')
                     moveOn()
                     previousCountry = country
                 }, {plainText: false})
@@ -160,6 +169,7 @@ function start() {
     questionCount = userOptions.questions.split("q-")[1]
     console.log("Data url: " + getDataUrl())
     console.log("Option count: " + optionCount)
+    incrementStat('totalGames')
     if (userOptions.mode !== "questions") {
         progressBar.parentElement.style.display = "none"
     } else {
@@ -168,9 +178,9 @@ function start() {
     if (userOptions.mode !== "streak") {
         streakProgress.style.display = "none"
     } else {
-        streakProgress.style.display = "block"
+        streakProgress.style.display = "inline"
     }
-    streakProgress.innerText = `Streak: ${streak}`
+    streakProgress.innerText = streak
     Loading.circle('Fetching data...')
     fetch(getDataUrl()).then((res) => {
         Loading.change('Parsing data...')

@@ -8,17 +8,19 @@
     <link rel="stylesheet" href="css/tippy.css">
     <link rel="stylesheet" href="css/shift-away-subtle.css">
     <link rel="icon" href="favicon.ico">
+    <script src="https://kit.fontawesome.com/9d23c8a337.js" crossorigin="anonymous"></script>
     <title>Flag Guesser</title>
 </head>
 <body>
     <div class="screen" id="welcome">
         <h1>Flag Guesser</h1>
-        <div id="customize-container">
-            <h3>Customize Game</h3>
+        <button class="play" id="play-btn"><i class="fa-solid fa-play"></i> Play</button>
+        <div id="customize-container" class="card">
+            <h3><i class="fa-solid fa-gear"></i> Customize Game</h3>
             <fieldset>
                 <legend>Game mode:</legend>
-                <input type="radio" name="mode" id="questions"><label for="questions" class="label-block" id="questions-label">Questions</label>
-                <input type="radio" name="mode" id="streak" checked><label for="streak" class="label-block" id="streak-label">Streak</label>
+                <input type="radio" name="mode" id="questions" checked><label for="questions" class="label-block" id="questions-label">Questions</label>
+                <input type="radio" name="mode" id="streak"><label for="streak" class="label-block" id="streak-label">Streak</label>
                 <input type="radio" name="mode" id="endless"><label for="endless" class="label-block" id="endless-label">Endless</label>
                 <fieldset id="questions-set" class="hidden" style="margin-top: 8px;">
                     <legend>Number of questions:</legend>
@@ -42,13 +44,24 @@
                 <input type="radio" name="difficulty" id="expert"><label for="expert" id="expert-label">Expert</label>
             </fieldset>
         </div>
-        <button class="play" id="play-btn">Play!</button>
+        <div id="stats-container" class="card">
+            <h3><i class="fa-solid fa-list"></i> Statistics</h3>
+            <ul>
+                <li id="s-streak"><i class="fa-sharp fa-solid fa-fire"></i> Highest Streak: <span class="stat">0</span></li>
+                <li id="s-totalQuestions"><i class="fa-solid fa-question"></i> Total Questions Answered: <span class="stat">0</span></li>
+                <li id="s-totalCorrect"><i class="fa-solid fa-check"></i> Total Correct: <span class="stat">0</span></li>
+                <li id="s-totalIncorrect"><i class="fa-solid fa-xmark"></i> Total Incorrect: <span class="stat">0</span></li>
+                <li id="sp-winRate"><i class="fa-solid fa-percent"></i> Correct Percentage: <span class="stat">0</span>%</li>
+                <li id="s-totalGames"><i class="fa-solid fa-hashtag"></i> Total Games Played: <span class="stat">0</span></li>
+            </ul>
+            <button class="danger" id="reset-stats"><i class="fa-solid fa-trash"></i> Reset Stats</button>
+        </div>
     </div>
     <div class="screen" id="guess" style="display: none;">
         <div id="progress-container">
             <div id="progress-fill"></div>
         </div>
-        <h2 id="streak-progress">Streak: 0</h2>
+        <h2 id="streak-progress"><i class="fa-sharp fa-solid fa-fire"></i> Streak: <span id="streak-num">0</span></h2>
         <img id="flag-svg" draggable="false" class="no-select">
         <div id="options">
         </div>
