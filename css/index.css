@@ -24,7 +24,7 @@ h1, h2, h3 {
     font-family: 'Alexandria', sans-serif;
 }
 
-#customize-container {
+.card {
     border: 2px lightgray solid;
     border-radius: 4px;
     max-width: 50%;
@@ -49,9 +49,20 @@ button {
 .play {
     background-color: rgb(7, 187, 7);
     color: white;
+    margin-bottom: 15px;
 }
 .play:active {
     background-color: rgb(7, 175, 7);
+}
+.danger {
+    background-color: rgb(230, 8, 8);
+    color: white;
+    padding: 4px;
+    padding-inline: 7px;
+    font-size: 16px;
+}
+.danger:active {
+    background-color: rgb(215, 8, 8);
 }
 
 #flag-svg {
@@ -118,6 +129,10 @@ input[type="radio"]:checked + label {
     left: 0;
     top: 0;
     transition: width 200ms;
+}
+#stats-container > ul {
+    list-style: none;
+    padding-left: 25px;
 }
 
 @media (max-width: 610px) {
