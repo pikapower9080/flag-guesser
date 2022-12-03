@@ -2,7 +2,7 @@
 
 const fs = require('fs')
 
-const filePath = "data/normal.json"
+const filePath = "data/expert.json"
 
 const fileData = fs.readFileSync(filePath)
 const data = JSON.parse(fileData)
