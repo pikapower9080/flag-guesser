@@ -19,6 +19,7 @@ let score = 0
 let canContinue = true
 const flagApiEndpoint = "flags/" // ignore the variable name XD
 const flagFallbackUrlStart = "https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/"
+// Note: Update the useFallback variable in gallery.html also
 const useFallback = ["AC","CP","DG","EA","IC","TA"] // Flags that need to use the simplified style from openmoji
 let progressBarPercent = 0
 let userOptions = {}

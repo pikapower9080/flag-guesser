@@ -1,13 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@500&family=Open+Sans&display=swap');
+@import url("global.css");
 
-:root {
-    --bg: rgb(237, 237, 237);
-}
+/* Styles are used only for index.html, see global.css for global styles like background color and fonts */
 
 body {
-    background-color: var(--bg);
     overflow: hidden;
-    font-family: 'Open Sans', sans-serif;
 }
 
 .screen {
@@ -18,10 +14,6 @@ body {
     left: 0;
     top: 0;
     text-align: center;
-}
-
-h1, h2, h3 {
-    font-family: 'Alexandria', sans-serif;
 }
 
 .card {
@@ -64,6 +56,13 @@ button {
 .danger:active {
     background-color: rgb(215, 8, 8);
 }
+.yellow-btn {
+    background-color: rgb(233, 222, 12);
+    color: black;
+}
+.yellow-btn:active {
+    background-color: rgb(223, 212, 12);
+}
 
 #flag-svg {
     height: 20vw;
@@ -97,10 +96,6 @@ button {
 
 .option:hover {
     background-color: rgb(213, 211, 211);
-}
-
-.no-select {
-    user-select: none;
 }
 
 input[type="radio"] {
@@ -150,10 +145,6 @@ input[type="radio"]:checked + label {
    #options {
     column-count: 1;
    }
-}
-
-.hidden {
-    display: none;
 }
 
 #streak-container {

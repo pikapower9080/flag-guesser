@@ -4,5 +4,7 @@
     "flags",
     "dist",
     "favicon.ico",
-    "index.html"
+    "index.html",
+    "gallery.html",
+    ".nojekyll"
 ]
