@@ -3,8 +3,10 @@ let statistics = {
     totalQuestions: 0,
     totalCorrect: 0,
     totalIncorrect: 0,
-    totalGames: 0
+    totalGames: 0,
+    flagsSeen: []
 }
+const totalFlagCount = 257 // Total number of flags in all difficulties. Run scripts/getFlagCount.js to recalculate
 
 export function saveStats(stats) {
     localStorage.setItem("flag-guesser-stats", JSON.stringify(stats))
@@ -37,6 +39,10 @@ export function updateStatReading() {
     let correctPercentage = Math.floor((getStat('totalCorrect') * 100) / getStat('totalQuestions'))
     if (isNaN(correctPercentage)) correctPercentage = 0
     document.getElementById('sp-winRate').querySelector('span.stat').innerText = correctPercentage
+    let flagsSeenPercentage = Math.floor((getStat('flagsSeen').length * 100) / totalFlagCount)
+    if (isNaN(flagsSeenPercentage)) flagsSeenPercentage = 0
+    if (flagsSeenPercentage > 100) flagsSeenPercentage = 100 // Whoops somebody forgot to update the totalFlagCount variable!
+    document.getElementById('sp-flagsPercent').querySelector('span.stat').innerText = flagsSeenPercentage
 }
 
 if (!loadStats()) {

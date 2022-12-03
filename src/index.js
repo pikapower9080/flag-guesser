@@ -19,7 +19,7 @@ let score = 0
 let canContinue = true
 const flagApiEndpoint = "flags/" // ignore the variable name XD
 const flagFallbackUrlStart = "https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/"
-const useFallback = ["AC","CP","DG","EA","IC","TA"] // Flags that need to use the simplified style
+const useFallback = ["AC","CP","DG","EA","IC","TA"] // Flags that need to use the simplified style from openmoji
 let progressBarPercent = 0
 let userOptions = {}
 let streak = 0
@@ -94,6 +94,19 @@ function guessFor(country) {
     }
     for (let i = 0; i < optionCount - 1; i++) {
         pick()
+    }
+    try {
+        if (!getStat('flagsSeen').includes(country.code)) {
+            let newStat = getStat('flagsSeen')
+            newStat.push(country.code)
+            updateStat('flagsSeen', newStat)
+        }
+    } catch(errorM) {
+        console.error("Failed to update statistics!")
+        console.error(errorM)
+    }
+    if (!getStat('flagsSeen').includes(country.code)) {
+        updateStat('flagsSeen', getStat('flagsSeen').push(country.code))
     }
     // Add correct option randomly
     options.splice(Math.floor(Math.random() * options.length), 0, country.name)
