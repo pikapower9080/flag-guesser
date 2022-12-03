@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A gallery of world flags used in the flag guesser game.">
+    <link rel="stylesheet" href="css/gallery.css">
+    <link rel="icon" href="favicon.ico">
+    <script src="https://kit.fontawesome.com/9d23c8a337.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notiflix@3.2.5/dist/notiflix-loading-aio-3.2.5.min.js"></script>
+    <title>Flag Guesser - Gallery</title>
+</head>
+<body>
+    <h1>Flag Guesser Gallery</h1>
+    <div id="gallery">
+        
+    </div>
+
+    <!-- Inline script so webpack doesn't include it in index.html -->
+    <script defer>
+        const useFallback = ["AC","CP","DG","EA","IC","TA"]
+        const flagFallbackUrlStart = "https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/"
+        const gallery = document.getElementById("gallery")
+
+        function showUserError(errorM) {
+            console.error(errorM)
+            alert("Error while loading / parsing data. Check the console for more details if you know what you're doing.")
+        }
+        function getFlagImage(imageUrl) {
+            if (useFallback.includes(imageUrl.split(".")[0])) {
+                return flagFallbackUrlStart + imageUrl
+            } else {
+                return 'flags/' + imageUrl
+            }
+        }
+        Notiflix.Loading.circle("Fetching data...")
+        fetch('data/expert-opt.json').then((res) => {
+            Notiflix.Loading.change('Parsing data...')
+            res.json().then((data) => {
+                Notiflix.Loading.change("Creating elements...")
+                data.forEach((country) => {
+                    const flagElement = document.createElement("div")
+                    flagElement.className = "card"
+                    flagElement.innerHTML = `<img src="${getFlagImage(country.image)}" alt="Flag of ${country.name}" class="flag"><span class="countryName">${country.name} [${country.code}]</span>`
+                    gallery.appendChild(flagElement)
+                    Notiflix.Loading.remove()
+                })
+            }).catch(showUserError)
+        }).catch(showUserError)
+    </script>
+</body>
+</html>

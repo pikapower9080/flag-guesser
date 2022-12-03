@@ -1,0 +1,28 @@
+@import url("global.css");
+
+#gallery {
+    column-count: 5;
+}
+
+.card {
+    border: lightgray solid 1.5px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.card .flag {
+    max-width: 100%;
+    display: block;
+}
+
+.card .countryName {
+    text-align: center;
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+@media (max-width:1080px){#gallery{column-count:4}}
+@media (max-width:840px){#gallery{column-count:3}}
+@media (max-width:620px){#gallery{column-count:2}}
+@media (max-width:340px){#gallery{column-count:1}}
