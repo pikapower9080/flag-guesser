@@ -6,7 +6,7 @@ let statistics = {
     totalGames: 0,
     flagsSeen: []
 }
-const totalFlagCount = 257 // Total number of flags in all difficulties. Run scripts/getFlagCount.js to recalculate
+const totalFlagCount = 254 // Total number of flags in all difficulties. Run scripts/getFlagCount.js to recalculate
 
 export function saveStats(stats) {
     localStorage.setItem("flag-guesser-stats", JSON.stringify(stats))
