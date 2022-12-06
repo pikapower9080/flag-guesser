@@ -231,13 +231,6 @@
         "image": "https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/BT.svg"
     },
     {
-        "name": "Bouvet Island",
-        "code": "BV",
-        "emoji": "🇧🇻",
-        "unicode": "U+1F1E7 U+1F1FB",
-        "image": "https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/BV.svg"
-    },
-    {
         "name": "Botswana",
         "code": "BW",
         "emoji": "🇧🇼",
@@ -439,13 +432,6 @@
         "emoji": "🇩🇿",
         "unicode": "U+1F1E9 U+1F1FF",
         "image": "https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/DZ.svg"
-    },
-    {
-        "name": "Ceuta & Melilla",
-        "code": "EA",
-        "emoji": "🇪🇦",
-        "unicode": "U+1F1EA U+1F1E6",
-        "image": "https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/EA.svg"
     },
     {
         "name": "Ecuador",
@@ -677,13 +663,6 @@
         "emoji": "🇭🇰",
         "unicode": "U+1F1ED U+1F1F0",
         "image": "https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/HK.svg"
-    },
-    {
-        "name": "Heard & McDonald Islands",
-        "code": "HM",
-        "emoji": "🇭🇲",
-        "unicode": "U+1F1ED U+1F1F2",
-        "image": "https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/HM.svg"
     },
     {
         "name": "Honduras",

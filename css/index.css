@@ -136,7 +136,7 @@ input[type="radio"]:checked + label {
     top: 0;
     transition: width 200ms;
 }
-#stats-container > ul {
+#stats-container > ul, #game-stats > ul {
     list-style: none;
     padding-left: 25px;
 }
@@ -147,6 +147,12 @@ input[type="radio"]:checked + label {
    }
 }
 
-#streak-container {
+#streak-container, #sub-streak {
     color: rgb(255, 128, 0);
+}
+#sub-quiz-score {
+    color: rgb(13, 128, 189);
+}
+#tg-difficulty > .stat {
+    text-transform: capitalize;
 }

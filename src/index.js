@@ -1,7 +1,7 @@
 import { Report } from 'notiflix/build/notiflix-report-aio';
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
 import { getDataUrl, getUserOptions } from './options';
-import { incrementStat, updateStat, getStat } from './statistics';
+import { incrementStat, updateStat, getStat, incrementGameStat, showEndScreen, updateGameStat } from './statistics';
 import './tooltips'
 import './options'
 import strings from './strings'
@@ -40,7 +40,7 @@ function randomCountry() {
     return data[Math.floor(Math.random() * data.length)]
 }
 
-function hideAllScreens() {
+export function hideAllScreens() {
     const screens = Array.from(document.getElementsByClassName("screen"))
     screens.forEach((screen) => {
         screen.style.display = "none"
@@ -122,16 +122,9 @@ function guessFor(country) {
             progressBar.style.width = progressBarPercent + "%"
             previousCountry = country
             incrementStat('totalQuestions')
-            if (questionNum + 1 > questionCount && userOptions.mode == "questions") { // I have no idea why I had to put +2
-                console.log("Time to end the game!")
-                setTimeout(() => {
-                    hideAllScreens()
-                    if(((100 * score) / questionCount) > 50) {
-                        Report.info("Game Complete!", strings.questionsFinish[Math.floor(Math.random() * strings.questionsFinish.length)].replace("%%", score).replace("%%", questionCount), "Finish", returnToHome)
-                    } else {
-                        Report.info("Game Complete!", strings.questionsFail[Math.floor(Math.random() * strings.questionsFail.length)].replace("%%", score).replace("%%", questionCount), "Finish", returnToHome)
-                    }
-                }, 370) // wait for the popup to animate out
+            incrementGameStat('totalQuestions')
+            if (questionNum + 1 > questionCount && userOptions.mode == "questions") {
+                unsavedChanges = false; return showEndScreen(userOptions.mode, streak, score, userOptions.questions)
             } else {
                 guessFor(randomCountry())
             }
@@ -150,26 +143,28 @@ function guessFor(country) {
                     if (!canContinue) return
                     processCanContinue()
                     incrementStat('totalCorrect')
+                    incrementGameStat('totalCorrect')
                     score ++
                     moveOn()
                 })
             } else { // YOU'RE WRONG XD GET TROLLED
                 if (userOptions.mode == "streak") {
-                    Report.failure("Streak lost!", `<b>Correct Answer: ${country.name} </b><br><br>` + strings.loseStreakMessages[Math.floor(Math.random() * strings.loseStreakMessages.length)].replaceAll("%%", streak), "Exit Game", () => {
-                        if (!canContinue) return
-                        processCanContinue()
-                        incrementStat('totalQuestions')
-                        incrementStat('totalIncorrect')
-                        if (getStat('streak') < streak) {
-                            updateStat('streak', streak)
-                        }
-                        return returnToHome()
-                    }, {plainText: false})
+                    if (!canContinue) return
+                    processCanContinue()
+                    incrementStat('totalQuestions')
+                    incrementGameStat('totalQuestions')
+                    incrementStat('totalIncorrect')
+                    incrementGameStat('totalIncorrect')
+                    if (getStat('streak') < streak) {
+                        updateStat('streak', streak)
+                    }
+                    unsavedChanges = false; return showEndScreen(userOptions.mode, streak, score, userOptions.questions, country.name)
                 }
                 Report.failure("Incorrect", strings.incorrectEndlessMessages[Math.floor(Math.random() * strings.incorrectEndlessMessages.length)].replaceAll("%%", '<b>' + country.name + '</b>'), "Next Question", () => {
                     if (!canContinue) return
                     processCanContinue()
                     incrementStat('totalIncorrect')
+                    incrementGameStat('totalIncorrect')
                     moveOn()
                     previousCountry = country
                 }, {plainText: false})
@@ -198,6 +193,8 @@ function start() {
     } else {
         streakContainer.style.display = "block"
     }
+    updateGameStat('difficulty', userOptions.difficulty)
+    updateGameStat('questions', userOptions.questions.split("q-")[1])
     streakNum.innerText = streak
     Loading.circle('Fetching data...')
     fetch(getDataUrl()).then((res) => {
@@ -228,9 +225,17 @@ window.addEventListener('beforeunload', event => {
     }
 })
 
+// Tick playtime stat
+setInterval(() => {
+    if (unsavedChanges) {
+        incrementGameStat('playtime')
+    }
+}, 1000)
+
 document.getElementById("close-btn").addEventListener("click", () => {
     if (confirm("Are you sure? Current progress will be lost!")) {
         returnToHome()
     }
 })
+document.getElementById('home-btn').addEventListener("click", returnToHome)
 document.getElementById('play-btn').addEventListener("click", start)

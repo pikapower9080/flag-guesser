@@ -21,9 +21,9 @@
             <h3><i class="fa-solid fa-gear"></i> Customize Game</h3>
             <fieldset>
                 <legend>Game mode:</legend>
-                <input type="radio" name="mode" id="questions" checked><label for="questions" class="label-block" id="questions-label">Questions</label>
-                <input type="radio" name="mode" id="streak"><label for="streak" class="label-block" id="streak-label">Streak</label>
-                <input type="radio" name="mode" id="endless"><label for="endless" class="label-block" id="endless-label">Endless</label>
+                <input type="radio" name="mode" id="questions" checked><label for="questions" class="label-block" id="questions-label"><i class="fa-solid fa-clipboard-list"></i> Quiz</label>
+                <input type="radio" name="mode" id="streak"><label for="streak" class="label-block" id="streak-label"><i class="fa-sharp fa-solid fa-fire"></i> Streak</label>
+                <input type="radio" name="mode" id="endless"><label for="endless" class="label-block" id="endless-label"><i class="fa-solid fa-infinity"></i> Endless</label>
                 <fieldset id="questions-set" class="hidden" style="margin-top: 8px;">
                     <legend>Number of questions:</legend>
                     <input type="radio" name="questions" id="q-5"><label for="q-5" class="label-block">5</label>
@@ -70,6 +70,25 @@
         <h2 id="streak-container"><i class="fa-sharp fa-solid fa-fire"></i> Streak: <span id="streak-num">0</span></h2>
         <img id="flag-svg" draggable="false" class="no-select">
         <div id="options">
+        </div>
+    </div>
+    <div class="screen" id="end" style="display: none;">
+        <h1 id="end-title">Game Over</h1>
+        <h2 id="end-correct-answer">The correct answer was: <span class="stat"></span></h2>
+        <button id="home-btn"><i class="fa-solid fa-house"></i> Home</button>
+        <h2 id="sub-streak"><i class="fa-sharp fa-solid fa-fire"></i> Streak: <span class="stat">?</span></h2>
+        <h2 id="sub-quiz-score"><i class="fa-solid fa-clipboard-list"></i> Score: <span id="score-value">?</span>/<span id="score-max">?</span></h2>
+        <div class="card" id="game-stats">
+            <h3><i class="fa-solid fa-list"></i> This Game</h3>
+            <ul>
+                <li id="tg-difficulty"><i class="fa-solid fa-glasses"></i> Difficulty: <span class="stat">???</span></li>
+                <li id="tg-questions"><i class="fa-solid fa-hashtag"></i> Question Count: <span class="stat">???</span></li>
+                <li id="tg-totalQuestions"><i class="fa-solid fa-question"></i> Total Questions Answered: <span class="stat">0</span></li>
+                <li id="tg-totalCorrect"><i class="fa-solid fa-check"></i> Total Correct: <span class="stat">0</span></li>
+                <li id="tg-totalIncorrect"><i class="fa-solid fa-xmark"></i> Total Incorrect: <span class="stat">0</span></li>
+                <li id="tsp-winRate"><i class="fa-solid fa-percent"></i> Correct Percentage: <span class="stat">0</span>%</li>
+                <li id="tsg-playtime"><i class="fa-solid fa-stopwatch"></i> Playtime: <span class="stat">0s</span></li>
+            </ul>
         </div>
     </div>
     <script defer src="dist/main.js"></script>
