@@ -1,5 +1,6 @@
 import { Report } from 'notiflix/build/notiflix-report-aio';
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
+import { Confirm } from 'notiflix/build/notiflix-confirm-aio';
 import { getDataUrl, getUserOptions } from './options';
 import { incrementStat, updateStat, getStat, incrementGameStat, showEndScreen, updateGameStat } from './statistics';
 import './tooltips'
@@ -7,6 +8,7 @@ import './options'
 import strings from './strings'
 
 Report.init({})
+Confirm.init({borderRadius: '10px'})
 
 let started = false
 let optionCount = 4
@@ -233,9 +235,7 @@ setInterval(() => {
 }, 1000)
 
 document.getElementById("close-btn").addEventListener("click", () => {
-    if (confirm("Are you sure? Current progress will be lost!")) {
-        returnToHome()
-    }
+    Confirm.show("Are you sure?", "Your statistics are already saved, but any current game progress will be lost.", "Leave", "Stay", returnToHome)
 })
 document.getElementById('home-btn').addEventListener("click", returnToHome)
 document.getElementById('play-btn').addEventListener("click", start)
