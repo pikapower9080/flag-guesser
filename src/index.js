@@ -5,10 +5,20 @@ import { getDataUrl, getUserOptions } from './options';
 import { incrementStat, updateStat, getStat, incrementGameStat, showEndScreen, updateGameStat } from './statistics';
 import './tooltips'
 import './options'
+import './styles/index.less'
 import strings from './strings'
+
+const version = '1.0.0'
+document.getElementById("version").innerText = "Version: " + version
 
 Report.init({})
 Confirm.init({borderRadius: '10px'})
+
+const gameModeIcons = {
+    questions: "fa-solid fa-clipboard-list",
+    streak: "fa-sharp fa-solid fa-fire",
+    endless: "fa-solid fa-infinity"
+}
 
 let started = false
 let optionCount = 4
@@ -197,6 +207,7 @@ function start() {
     }
     updateGameStat('difficulty', userOptions.difficulty)
     updateGameStat('questions', userOptions.questions.split("q-")[1])
+    document.querySelector("#info-difficulty > span").innerText = userOptions.difficulty
     streakNum.innerText = streak
     Loading.circle('Fetching data...')
     fetch(getDataUrl()).then((res) => {

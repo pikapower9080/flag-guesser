@@ -15,5 +15,6 @@
         "webpack.config.js"
     ],
     "rules": {
+        "no-unused-vars": ["warn", { "vars": "all", "args": "none" }]
     }
 }
