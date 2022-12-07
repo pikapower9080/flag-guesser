@@ -8,7 +8,7 @@ import './options'
 import './styles/index.less'
 import strings from './strings'
 
-const version = '1.0.1'
+const version = '1.0.2'
 document.getElementById("version").innerText = "Version: " + version
 
 Report.init({})
