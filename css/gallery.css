@@ -2,25 +2,42 @@
 
 #gallery {
     column-count: 5;
+    padding-bottom: 50px;
 }
 
-.card {
+.item {
     border: lightgray solid 1.5px;
     border-radius: 5px;
     margin-bottom: 10px;
 }
 
-.card .flag {
+.item .flag {
     max-width: 100%;
     display: block;
 }
 
-.card .countryName {
+.item .countryName {
     text-align: center;
     display: block;
     font-size: 18px;
     font-weight: bold;
 }
+
+fieldset {
+    text-align: left;
+}
+form {
+    text-align: center;
+}
+.green {
+    background-color: #07bb07;
+    color: white;
+    padding: 5px;
+    margin-top: 6px;
+}
+.green:active {
+    background-color: #07af07;
+}  
 
 @media (max-width:1080px){#gallery{column-count:4}}
 @media (max-width:840px){#gallery{column-count:3}}
