@@ -1,0 +1,51 @@
+@blueBg: rgb(100, 100, 239);
+@greenBg: rgb(7, 187, 7);
+@redBg: rgb(230, 8, 8);
+@yellowBg: rgb(233, 222, 12);
+@grayBg: rgb(212, 212, 212);
+
+.btn-blue {
+    background-color: @blueBg;
+    color: white;
+    &:hover {
+        background-color: saturate(@blueBg, 30%);
+    }
+}
+
+.btn-green {
+    background-color: @greenBg;
+    color: white;
+    &:hover {
+        background-color: desaturate(@greenBg, 20%)
+    }
+}
+
+.danger {
+    padding: 4px;
+    padding-inline: 7px;
+    font-size: 16px;
+}
+
+.btn-red {
+    background-color: @redBg;
+    color: white;
+    &:hover {
+        background-color: desaturate(@redBg, 20%);
+    }
+}
+
+.btn-yellow {
+    background-color: @yellowBg;
+    color: black;
+    &:hover {
+        background-color: desaturate(@yellowBg, 10%);
+    }
+}
+
+.btn-gray {
+    background-color: @grayBg;
+    color: black;
+    &:hover {
+        background-color: rgb(197, 196, 196);
+    }
+}

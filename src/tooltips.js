@@ -7,7 +7,8 @@ const tooltipsById = {
     "endless-label": "Keep going forever and ever, no consequences",
     "questions-label": "Ask an arbitrary number of questions before the game is over and you get a score",
     "streak-label": "Keep playing and growing your streak until you get a question wrong",
-    "sp-flagsPercent": "Percentage of the world's flags that you've encountered while playing"
+    "sp-flagsPercent": "Percentage of the world's flags that you've encountered while playing",
+    "replay-btn": "Start over using the same options"
 }
 
 for (let elementId in tooltipsById) {

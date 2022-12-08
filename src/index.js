@@ -6,21 +6,15 @@ import { incrementStat, updateStat, getStat, incrementGameStat, showEndScreen, u
 import './tooltips'
 import './options'
 import './styles/index.less'
+import './styles/buttons.less'
 import strings from './strings'
 
-const version = '1.1.0'
+const version = '1.2.0'
 document.getElementById("version").innerText = "Version: " + version
 
 Report.init({})
 Confirm.init({borderRadius: '10px'})
 
-const gameModeIcons = {
-    questions: "fa-solid fa-clipboard-list",
-    streak: "fa-sharp fa-solid fa-fire",
-    endless: "fa-solid fa-infinity"
-}
-
-let started = false
 let optionCount = 4
 let data = {}
 let currentCountry; // grr no cheating
@@ -66,8 +60,7 @@ function clearOptions() {
     })
 }
 
-function returnToHome() {
-    started = false
+function reset() {
     currentCountry = null
     previousCountry = null
     questionNum = 0
@@ -75,6 +68,10 @@ function returnToHome() {
     score = 0
     streak = 0
     unsavedChanges = false
+}
+
+function returnToHome() {
+    reset()
     hideAllScreens()
     document.getElementById("welcome").style.display = "unset"
 }
@@ -186,8 +183,6 @@ function guessFor(country) {
 }
 
 function start() {
-    if (started) return
-    started = true
     userOptions = getUserOptions()
     optionCount = userOptions.options.split("opt-")[1]
     questionCount = userOptions.questions.split("q-")[1]
@@ -247,6 +242,11 @@ setInterval(() => {
 
 document.getElementById("close-btn").addEventListener("click", () => {
     Confirm.show("Are you sure?", "Your statistics are already saved, but any current game progress will be lost.", "Leave", "Stay", returnToHome)
+})
+document.getElementById('replay-btn').addEventListener("click", () => {
+    hideAllScreens()
+    reset()
+    start()
 })
 document.getElementById('home-btn').addEventListener("click", returnToHome)
 document.getElementById('play-btn').addEventListener("click", start)
