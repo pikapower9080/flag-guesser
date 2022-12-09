@@ -2,6 +2,9 @@
 
 @bg: rgb(237, 237, 237);
 
+@import url('modal.less');
+@import url('buttons.less');
+
 body {
     overflow: hidden;
 }
@@ -118,4 +121,8 @@ ul {
 
 .spacer {
     margin-bottom: 15px;
+}
+
+.modal-content > ul > li::marker {
+    content: '☞ ';
 }

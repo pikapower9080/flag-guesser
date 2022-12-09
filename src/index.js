@@ -5,8 +5,8 @@ import { getDataUrl, getUserOptions } from './options';
 import { incrementStat, updateStat, getStat, incrementGameStat, showEndScreen, updateGameStat } from './statistics';
 import './tooltips'
 import './options'
+import {showAbout} from './about'
 import './styles/index.less'
-import './styles/buttons.less'
 import strings from './strings'
 
 const version = '1.2.0'
@@ -250,3 +250,4 @@ document.getElementById('replay-btn').addEventListener("click", () => {
 })
 document.getElementById('home-btn').addEventListener("click", returnToHome)
 document.getElementById('play-btn').addEventListener("click", start)
+document.getElementById('about-btn').addEventListener("click", showAbout)
