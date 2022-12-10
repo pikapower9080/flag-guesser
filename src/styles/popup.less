@@ -1,4 +1,4 @@
-.modal-backdrop {
+.popup-backdrop {
     position: fixed;
     left: 0;
     top: 0;
@@ -7,7 +7,7 @@
     height: 100vh;
 }
 
-.modal-container {
+.popup-container {
     margin: auto;
     position: absolute;
     top: 0; left: 0; bottom: 0; right: 0;
@@ -18,7 +18,7 @@
 }
 
 @xSize: 18px;
-.modal-close {
+.popup-close {
     position: absolute;
     right: 0;
     top: 0;
@@ -32,7 +32,7 @@
 }
 
 @header-height: 20px;
-.modal-title {
+.popup-title {
     font-size: @header-height;
     text-align: center;
     display: block;
@@ -40,16 +40,20 @@
     border-bottom: 1px solid rgba(128, 128, 128, 0.673);
 }
 
-.modal-header {
+.popup-header {
     height: @header-height;
     background-color: @bg;
     z-index: 2;
 }
 
-.modal-content {
+.popup-content {
     padding-inline: 6px;
     overflow-y: auto;
     height: calc(calc(100% - @header-height) - 9px);
     margin-top: 9px;
     z-index: 1;
+}
+
+.popup-content > ul> li::marker {
+    content: '☞ ';
 }

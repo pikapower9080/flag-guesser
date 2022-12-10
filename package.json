@@ -20,6 +20,7 @@
   "homepage": "https://github.com/pikapower9080/flag-guesser#readme",
   "dependencies": {
     "notiflix": "^3.2.5",
+    "super-simple-popup": "^1.0.2",
     "tippy.js": "^6.3.7"
   },
   "devDependencies": {

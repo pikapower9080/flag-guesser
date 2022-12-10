@@ -1,4 +1,4 @@
-import Modal from "./modal";
+import Popup from "super-simple-popup"
 
 const content = `
 <h3>What is this?</h3>
@@ -19,7 +19,7 @@ If you've found a bug or have an idea for a feature, please <a href="https://git
 `
 
 export function showAbout() {
-    new Modal({
+    new Popup({
         title: 'About',
         plainText: false,
         content: content
