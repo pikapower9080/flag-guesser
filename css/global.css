@@ -36,6 +36,16 @@ h1, h2, h3 {
     left: 50%;
     transform: translateX(-50%);
 }
+@media (max-width: 800px) {
+    .card {
+        max-width: 75%;
+    }
+}
+@media (max-width: 500px) {
+    .card {
+        max-width: 90%;
+    }
+}
 
 input[type="radio"] {
     opacity: 0;
