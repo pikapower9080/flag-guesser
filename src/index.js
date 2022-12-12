@@ -8,6 +8,7 @@ import './options'
 import {showAbout} from './about'
 import './styles/index.less'
 import strings from './strings'
+import Popup from 'super-simple-popup';
 
 const version = '1.2.0'
 document.getElementById("version").innerText = "Version: " + version
@@ -76,6 +77,14 @@ function returnToHome() {
     document.getElementById("welcome").style.display = "unset"
 }
 
+function getFlagUrl(country) {
+    if (useFallback.includes(country.code)) {
+        return flagFallbackUrlStart + country.image
+    } else {
+        return flagApiEndpoint + country.code + ".svg"
+    }
+}
+
 const guessScreen = document.getElementById("guess")
 const flagSvg = document.getElementById("flag-svg")
 const optionsDiv = document.getElementById("options")
@@ -87,11 +96,7 @@ function guessFor(country) {
         guessFor(randomCountry())
         return
     }
-    if (useFallback.includes(country.code)) {
-        flagSvg.src = flagFallbackUrlStart + country.image
-    } else {
-        flagSvg.src = flagApiEndpoint + country.code + ".svg"
-    }
+    flagSvg.src = getFlagUrl(country)
     clearOptions()
     function pick() {
         const rCountry = randomCountry()
@@ -247,6 +252,13 @@ document.getElementById('replay-btn').addEventListener("click", () => {
     hideAllScreens()
     reset()
     start()
+})
+document.getElementById('view-flag-btn').addEventListener("click", () => {
+    new Popup({
+        title: `Flag of ${currentCountry.name}`,
+        content: `<img src="${getFlagUrl(currentCountry)}" class="view-flag-img">`,
+        plainText: false
+    })
 })
 document.getElementById('home-btn').addEventListener("click", returnToHome)
 document.getElementById('play-btn').addEventListener("click", start)
