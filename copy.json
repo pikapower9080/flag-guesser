@@ -3,8 +3,9 @@
     "data",
     "flags",
     "dist",
-    "favicon.ico",
     "index.html",
     "gallery.html",
-    ".nojekyll"
+    ".nojekyll",
+    "manifest.json",
+    "icons"
 ]
