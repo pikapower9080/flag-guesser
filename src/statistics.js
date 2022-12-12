@@ -98,6 +98,14 @@ export function showEndScreen(gameMode, streak = 0, score = 0, maxScore = 0, cor
     } else {
         questionCountStat.style.display = "none"
     }
+    Array.from(document.querySelectorAll(".no-streak")).forEach((element) => {
+        if (!element) return
+        if (gameMode == "streak") {
+            element.style.display = "none"
+        } else {
+            element.style.display = "block"
+        }
+    })
     clearGameStats()
 }
 
