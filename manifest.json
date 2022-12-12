@@ -23,7 +23,7 @@
             "sizes": "32x32"
         }
     ],
-    "theme_color": "#e20c29",
+    "theme_color": "#ededed",
     "background_color": "#ededed",
     "display": "standalone",
     "scope": "/flag-guesser",
