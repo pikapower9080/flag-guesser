@@ -10,7 +10,7 @@ import './styles/index.less'
 import strings from './strings'
 import Popup from 'super-simple-popup';
 
-const version = '1.3.3'
+const version = '%ver%'
 document.getElementById("version").innerText = "Version: " + version
 
 Report.init({})
