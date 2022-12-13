@@ -124,6 +124,21 @@
         </div>
     </div>
     <script defer src="dist/main.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js')
+                .then(function (registration) {
+                    // Registration was successful
+                    console.log('Service worker registration succeeded:', registration);
+                })
+                .catch(function (error) {
+                    // Registration failed
+                    console.log('Service worker registration failed:', error);
+                });
+        } else {
+            console.log("Service worker not supported")
+        }
+    </script>
 </body>
 
 </html>
