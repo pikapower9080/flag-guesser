@@ -3,7 +3,7 @@
     "short_name": "Flag Guesser",
     "icons": [
         {
-            "src": "icons/apple-touch-icon",
+            "src": "icons/apple-touch-icon.png",
             "type": "image/png",
             "sizes": "180x180"
         },
@@ -26,6 +26,6 @@
     "theme_color": "#ededed",
     "background_color": "#ededed",
     "display": "standalone",
-    "scope": "/flag-guesser",
-    "start_url": "/flag-guesser"
+    "scope": "/flag-guesser/",
+    "start_url": "/flag-guesser/"
 }
