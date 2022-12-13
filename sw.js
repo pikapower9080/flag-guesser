@@ -1,4 +1,4 @@
-// Service Worker for Offline Caching
+// Service Worker for offline use
 
 const CACHE_NAME = '%ver%';
 const CACHE_LIST = '%list%'.split(",")
