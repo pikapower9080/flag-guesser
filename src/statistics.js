@@ -152,3 +152,20 @@ document.getElementById("reset-stats").addEventListener("click", () => {
         window.location.reload()
     }, undefined, confirmOptions)
 })
+function generateCopyText() {
+    let lines = []
+    Array.from(document.querySelectorAll("#stats-container > ul > li")).forEach((listItem) => {
+        if (listItem.getAttribute("icon")) {
+            lines.push(`${listItem.getAttribute("icon")}${listItem.innerText}`)
+        }
+    })
+    return lines.join("\n")
+}
+document.getElementById("copy-stats").addEventListener("click", () => {
+    const textElement = document.createElement("textarea")
+    textElement.value = generateCopyText()
+    document.body.appendChild(textElement)
+    textElement.select()
+    document.execCommand("copy")
+    textElement.remove()
+})
