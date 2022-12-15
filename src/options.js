@@ -3,17 +3,18 @@ import { applyTheme, resetTheme } from "./themes"
 const radios = Array.from(document.querySelectorAll("input[type='radio']"))
 let userOptions = {}
 let userSettings = {
-    "theme": "default-theme"
+    "theme": "default-theme",
+    "popup-animation": "fade"
 }
 
 radios.forEach((input) => {
     if (input.id.startsWith('s-')) {
         // Setting handler
         input.addEventListener('input', () => {
-            userSettings[input.name] = input.id.split("s-")[1]
+            userSettings[input.name] = input.value
             console.debug(userSettings)
             saveSettings(userSettings)
-            if (userSettings.theme != "default-theme") {
+            if (userSettings.theme != "default") {
                 applyTheme(userSettings.theme)
             } else {
                 resetTheme()
@@ -46,6 +47,10 @@ function loadSettings() {
 
 function saveSettings(settings) {
     localStorage.setItem("flag-guesser-settings", JSON.stringify(settings))
+}
+
+export function getSetting(settingName) {
+    return userSettings[settingName]
 }
 
 if (!loadSettings()) {

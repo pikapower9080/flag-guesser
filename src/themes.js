@@ -1,10 +1,10 @@
-import { Confirm, Report } from "notiflix"
+import { getSetting } from './options'
 
 export let reportOptions = {}
 export let confirmOptions = {borderRadius: 10}
 
 export const themes = {
-    "dark-theme": {
+    "dark": {
         "bg": "#232323",
         "text-color": "#FFFFFF",
         "secondary-text-color": "#d1d1d1",
@@ -36,7 +36,7 @@ export const themes = {
 }
 
 export function applyTheme(themeName) {
-    if (themeName == "default-theme") return
+    if (themeName == "default-theme" || themeName == "default") return
     let theme = themes[themeName]
     if (!theme) {console.warn(`Theme "${themeName}" not found!`); return}
     for (let property in theme) {
@@ -50,6 +50,7 @@ export function applyTheme(themeName) {
         newGlobalOptions[property] = globalOptions[property]
     }
     newGlobalOptions['plainText'] = false
+    newGlobalOptions['cssAnimationStyle'] = getSetting('popup-animation')
     reportOptions = newGlobalOptions
     newGlobalOptions['borderRadius'] = 10
     confirmOptions = newGlobalOptions
@@ -58,6 +59,6 @@ export function applyTheme(themeName) {
 
 export function resetTheme() {
     document.documentElement.setAttribute("style", "")
-    confirmOptions = {plainText: false, borderRadius: 10}
-    reportOptions = {plainText: false}
+    confirmOptions = {plainText: false, borderRadius: 10, cssAnimationStyle: getSetting('popup-animation')}
+    reportOptions = {plainText: false, cssAnimationStyle: getSetting('popup-animation')}
 }

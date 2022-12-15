@@ -1,6 +1,6 @@
 {
   "name": "flag-guesser",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "description": " A vanilla js web game about guessing world flags",
   "main": "index.js",
   "scripts": {
