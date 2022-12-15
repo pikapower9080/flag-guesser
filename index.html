@@ -44,7 +44,6 @@
             </fieldset>
             <fieldset>
                 <legend>Number of options:</legend>
-                <!-- <input type="radio" name="options" id="opt-2"><label for="opt-2" class="label-block">2</label> -->
                 <input type="radio" name="options" id="opt-4" checked><label for="opt-4" class="label-block">4</label>
                 <input type="radio" name="options" id="opt-6"><label for="opt-6" class="label-block">6</label>
                 <input type="radio" name="options" id="opt-8"><label for="opt-8" class="label-block">8</label>
@@ -60,22 +59,23 @@
         <div id="stats-container" class="card">
             <h3><i class="fa-solid fa-list"></i> Statistics</h3>
             <ul>
-                <li id="s-streak"><i class="fa-sharp fa-solid fa-fire"></i> Highest Streak: <span class="stat">0</span>
+                <li id="s-streak" icon="&#x1F525;"><i class="fa-sharp fa-solid fa-fire"></i> Highest Streak: <span class="stat">0</span>
                 </li>
-                <li id="s-totalQuestions"><i class="fa-solid fa-question"></i> Total Questions Answered: <span
+                <li id="s-totalQuestions" icon="&#x2753;"><i class="fa-solid fa-question"></i> Total Questions Answered: <span
                         class="stat">0</span></li>
-                <li id="s-totalCorrect"><i class="fa-solid fa-check"></i> Total Correct: <span class="stat">0</span>
+                <li id="s-totalCorrect" icon="&#x2705;"><i class="fa-solid fa-check"></i> Total Correct: <span class="stat">0</span>
                 </li>
-                <li id="s-totalIncorrect"><i class="fa-solid fa-xmark"></i> Total Incorrect: <span class="stat">0</span>
+                <li id="s-totalIncorrect" icon="&#x274C;"><i class="fa-solid fa-xmark"></i> Total Incorrect: <span class="stat">0</span>
                 </li>
-                <li id="sp-winRate"><i class="fa-solid fa-percent"></i> Correct Percentage: <span class="stat">0</span>%
+                <li id="sp-winRate" icon="&#x1F453;"><i class="fa-solid fa-percent"></i> Correct Percentage: <span class="stat">0</span>%
                 </li>
-                <li id="sp-flagsPercent" style="display: inline;"><i class="fa-solid fa-flag"></i> Percent of Flags
+                <li id="sp-flagsPercent" style="display: inline;" icon="&#x1F3F4;"><i class="fa-solid fa-flag"></i> Percent of Flags
                     Seen: <span class="stat">0</span>%</li><br>
-                <li id="s-totalGames"><i class="fa-solid fa-hashtag"></i> Total Games Played: <span
+                <li id="s-totalGames" icon="&#x0023;&#xFE0F;&#x20E3;"><i class="fa-solid fa-hashtag"></i> Total Games Played: <span
                         class="stat">0</span></li>
             </ul>
-            <button class="danger btn-red" id="reset-stats"><i class="fa-solid fa-trash"></i> Reset Stats</button>
+            <button class="thin btn-red" id="reset-stats"><i class="fa-solid fa-trash"></i> Reset Stats</button>
+            <button class="btn-purple thin" id="copy-stats"><i class="fa-regular fa-clipboard"></i> Copy Stats</button>
         </div>
         <div id="options-container" class="card">
             <h3><i class="fa-solid fa-sliders"></i> Options</h3>
