@@ -6,6 +6,11 @@
 
 :root {
     --bg: rgb(237, 237, 237);
+    --card-border: lightgray;
+    --radio-bg: #ddd;
+    --radio-selected-bg: #bfb;
+    --radio-selected-color: black;
+    --fieldset-border: rgb(223, 220, 220);
 }
 
 body {
@@ -27,7 +32,7 @@ h1, h2, h3 {
 }
 
 .card {
-    border: 2px lightgray solid;
+    border: 2px var(--card-border) solid;
     border-radius: 4px;
     max-width: 50%;
     text-align: left;
@@ -56,7 +61,7 @@ input[type="radio"] {
 }
 label {
     display: inline-block;
-    background-color: #ddd;
+    background-color: var(--radio-bg);
     padding: 10px 20px;
     font-family: sans-serif, Arial;
     font-size: 16px;
@@ -65,8 +70,9 @@ label {
     cursor: pointer;
 }
 input[type="radio"]:checked + label {
-    background-color:#bfb;
+    background-color: var(--radio-selected-bg);
     border-color: #4c4;
+    color: var(--radio-selected-color);
 }
 
 button {
@@ -76,4 +82,8 @@ button {
     min-width: 100px;
     cursor: pointer;
     border: none;
+}
+
+fieldset {
+    border-color: var(--fieldset-border);
 }
