@@ -1,12 +1,33 @@
 // Styles are used only for index.html, see global.css for global styles like background color and fonts
 
-@bg: rgb(237, 237, 237);
+// Yes I'm using less.css and less.css variables are better, but these need to be changed with javascript
+:root {
+    // bg variable is added in global.css
+    --option-bg: #e9e9ed;
+    --option-hover-bg: rgb(213, 211, 211);
+    --option-border-color: #c4c4c5;
+    --progress-bar-color: #0d80bd;
+    --progress-bar-bg: #c6c6c6;
+    --text-color: #000000;
+    --secondary-text-color: rgb(97, 97, 97);
+    --link-color: #2e2ef1;
+    --gray-btn-color: rgb(212, 212, 212);
+    --gray-btn-hover: rgb(197, 196, 196);
+}
 
 @import url('popup.less');
 @import url('buttons.less');
 
 body {
     overflow: hidden;
+    color: var(--text-color);
+}
+
+a {
+    color: var(--link-color);
+}
+a:visited {
+    color: var(--link-color);
 }
 
 .screen {
@@ -51,9 +72,11 @@ body {
     margin-bottom: 5px;
     height: 50px;
     transition: background 300ms;
-    border: rgba(188, 188, 188, 0.798) 1px solid;
+    border: var(--option-border-color) 1px solid;
+    background-color: var(--option-bg);
+    color: var(--text-color);
     &:hover {
-        background-color: rgb(213, 211, 211);
+        background-color: var(--option-hover-bg);
     }
 }
 
@@ -63,13 +86,13 @@ body {
     margin: 10px;
     margin-inline: 25px;
     border-radius: 20px;
-    background-color: rgb(198, 198, 198);
+    background-color: var(--progress-bar-bg);
 }
 #progress-fill {
     width: 0%;
     height: 100%;
     border-radius: 25px;
-    background-color: rgb(13, 128, 189);
+    background-color: var(--progress-bar-color);
     position: relative;
     left: 0;
     top: 0;
@@ -101,7 +124,7 @@ ul {
     position: fixed;
     right: 0;
     bottom: 0;
-    background-color: @bg;
+    background-color: var(--bg);
     padding: 6px;
 }
 
@@ -110,12 +133,13 @@ ul {
     position: fixed;
 }
 
-#version {
-    color: rgb(97, 97, 97);
+#game-info {
+    color: var(--secondary-text-color);
     bottom: 0;
     right: 0;
-    background-color: @bg;
+    background-color: var(--bg);
     font-size: 12px;
+    text-align: right;
     .corner-item()
 }
 

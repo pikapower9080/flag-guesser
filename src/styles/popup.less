@@ -13,7 +13,7 @@
     top: 0; left: 0; bottom: 0; right: 0;
     width: 35vw;
     height: 320px;
-    background-color: @bg;
+    background-color: var(--bg);
     min-width: 320px;
 }
 
@@ -29,6 +29,7 @@
     padding: 0px;
     min-width: 0px;
     font-size: @xSize;
+    color: var(--secondary-text-color);
 }
 
 @header-height: 20px;
@@ -42,7 +43,7 @@
 
 .popup-header {
     height: @header-height;
-    background-color: @bg;
+    background-color: var(--bg);
     z-index: 2;
 }
 

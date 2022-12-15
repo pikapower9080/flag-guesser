@@ -2,7 +2,6 @@
 @greenBg: rgb(7, 187, 7);
 @redBg: rgb(230, 8, 8);
 @yellowBg: rgb(234, 223, 28);
-@grayBg: rgb(212, 212, 212);
 
 .btn-blue {
     background-color: @blueBg;
@@ -43,9 +42,9 @@
 }
 
 .btn-gray {
-    background-color: @grayBg;
-    color: black;
+    background-color: var(--gray-btn-color);
+    color: var(--text-color);
     &:hover {
-        background-color: rgb(197, 196, 196);
+        background-color: var(--gray-btn-hover);
     }
 }
