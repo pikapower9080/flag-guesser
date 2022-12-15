@@ -77,7 +77,10 @@
             </ul>
             <button class="danger btn-red" id="reset-stats"><i class="fa-solid fa-trash"></i> Reset Stats</button>
         </div>
-        <span id="version">Version: ???</span>
+        <ul id="game-info">
+            <li id="version">Version: ???</li>
+            <li id="sw-status">Offline <a href="https://caniuse.com/serviceworkers" target="_blank">not supported</a></li>
+        <ul>
     </div>
     <div class="screen" id="guess" style="display: none;">
         <svg id="close-btn" role="button" xmlns="http://www.w3.org/2000/svg" fill="000000" viewBox="0 0 24 24"
@@ -130,10 +133,12 @@
                 .then(function (registration) {
                     // Registration was successful
                     console.log('Service worker registration succeeded:', registration);
+                    document.getElementById("sw-status").innerHTML = "Ready to use offline"
                 })
                 .catch(function (error) {
                     // Registration failed
                     console.log('Service worker registration failed:', error);
+                    document.getElementById("sw-status").innerHTML = "Failed to setup offline access"
                 });
         } else {
             console.log("Service worker not supported")
