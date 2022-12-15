@@ -156,6 +156,11 @@ function guessFor(country) {
                     processCanContinue()
                     incrementStat('totalCorrect')
                     incrementGameStat('totalCorrect')
+                    if (userOptions.mode == "streak") {
+                        if (getStat('streak') < streak) {
+                            updateStat('streak', streak)
+                        }
+                    }
                     score ++
                     moveOn()
                 }, reportOptions)
