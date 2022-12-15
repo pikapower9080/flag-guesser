@@ -12,7 +12,6 @@ const tooltipsById = {
 }
 
 for (let elementId in tooltipsById) {
-    console.debug("adding tooltip for: " + elementId)
     tippy(document.getElementById(elementId), {
         content: tooltipsById[elementId],
         placement: 'top',

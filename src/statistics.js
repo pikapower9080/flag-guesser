@@ -1,5 +1,6 @@
 import { hideAllScreens } from "./index"
 import { Confirm } from 'notiflix/build/notiflix-confirm-aio'
+import { confirmOptions } from "./themes"
 
 let statistics = {
     streak: 0,
@@ -149,5 +150,5 @@ document.getElementById("reset-stats").addEventListener("click", () => {
     Confirm.show("Are you sure?", "This cannot be undone!", 'Clear Stats', 'Cancel', () => {
         localStorage.removeItem("flag-guesser-stats")
         window.location.reload()
-    })
+    }, undefined, confirmOptions)
 })

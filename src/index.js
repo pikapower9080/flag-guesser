@@ -9,12 +9,10 @@ import {showAbout} from './about'
 import './styles/index.less'
 import strings from './strings'
 import Popup from 'super-simple-popup';
+import { confirmOptions, reportOptions } from './themes';
 
 const version = '%ver%'
 document.getElementById("version").innerText = "Version: " + version
-
-Report.init({})
-Confirm.init({borderRadius: '10px'})
 
 let optionCount = 4
 let data = {}
@@ -40,7 +38,7 @@ const streakContainer = document.getElementById("streak-container")
 function showUserError(errorM) {
     Loading.remove()
     console.error(errorM)
-    Report.failure("Error", errorM.toString() || "An unknown error occurred.")
+    Report.failure("Error", errorM.toString() || "An unknown error occurred.", "Ok", reportOptions)
 }
 
 function randomCountry() {
@@ -160,7 +158,7 @@ function guessFor(country) {
                     incrementGameStat('totalCorrect')
                     score ++
                     moveOn()
-                })
+                }, reportOptions)
             } else { // YOU'RE WRONG XD GET TROLLED
                 if (userOptions.mode == "streak") {
                     if (!canContinue) return
@@ -181,7 +179,7 @@ function guessFor(country) {
                     incrementGameStat('totalIncorrect')
                     moveOn()
                     previousCountry = country
-                }, {plainText: false})
+                }, reportOptions)
             }
         })
     })
@@ -246,7 +244,7 @@ setInterval(() => {
 }, 1000)
 
 document.getElementById("close-btn").addEventListener("click", () => {
-    Confirm.show("Are you sure?", "Your statistics are already saved, but any current game progress will be lost.", "Leave", "Stay", returnToHome)
+    Confirm.show("Are you sure?", "Your statistics are already saved, but any current game progress will be lost.", "Leave", "Stay", returnToHome, undefined, confirmOptions)
 })
 document.getElementById('replay-btn').addEventListener("click", () => {
     hideAllScreens()

@@ -1,7 +1,8 @@
 @blueBg: rgb(100, 100, 239);
 @greenBg: rgb(7, 187, 7);
 @redBg: rgb(230, 8, 8);
-@yellowBg: rgb(234, 223, 28);
+@yellowBg: rgb(245, 235, 56);
+@purpleBg: rgb(168, 28, 215);
 
 .btn-blue {
     background-color: @blueBg;
@@ -37,7 +38,7 @@
     background-color: @yellowBg;
     color: black;
     &:hover {
-        background-color: desaturate(@yellowBg, 10%);
+        background-color: rgb(234, 225, 56);
     }
 }
 
@@ -46,5 +47,13 @@
     color: var(--text-color);
     &:hover {
         background-color: var(--gray-btn-hover);
+    }
+}
+
+.btn-purple {
+    background-color: @purpleBg;
+    color: white;
+    &:hover {
+        background-color: desaturate(@purpleBg, 20%);
     }
 }
