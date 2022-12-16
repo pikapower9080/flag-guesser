@@ -1,6 +1,7 @@
 import { hideAllScreens } from "./index"
 import { Confirm } from 'notiflix/build/notiflix-confirm-aio'
-import { confirmOptions } from "./themes"
+import { confirmOptions, reportOptions } from "./themes"
+import { Report } from "notiflix"
 
 let statistics = {
     streak: 0,
@@ -162,10 +163,16 @@ function generateCopyText() {
     return lines.join("\n")
 }
 document.getElementById("copy-stats").addEventListener("click", () => {
-    const textElement = document.createElement("textarea")
-    textElement.value = generateCopyText()
-    document.body.appendChild(textElement)
-    textElement.select()
-    document.execCommand("copy")
-    textElement.remove()
+    try {
+        const textElement = document.createElement("textarea")
+        textElement.value = generateCopyText()
+        document.body.appendChild(textElement)
+        textElement.select()
+        document.execCommand("copy")
+        textElement.remove()
+        Report.success("Copied!", "Successfully copied to clipboard.", "Ok", reportOptions)
+    } catch(errorM) {
+        console.error(errorM)
+        Report.failure("Error", "Failed to copy text, sorry about that :(", "Ok", reportOptions)
+    }
 })
