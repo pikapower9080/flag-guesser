@@ -149,7 +149,8 @@ function guessFor(country) {
                 canContinue = true
             }, 370)
         }
-        btn.addEventListener("click", () => {
+        function onBtnClick() {
+            if (btn.getAttribute("clicked")) return
             if (option == country.name) { // YAY IT'S CORRECT!!!! LET'S GO!!!
                 streak ++
                 streakNum.innerText = streak
@@ -188,7 +189,9 @@ function guessFor(country) {
                     previousCountry = country
                 }, reportOptions)
             }
-        })
+            btn.setAttribute("clicked", true)
+        }
+        btn.addEventListener("click", onBtnClick)
     })
 }
 
