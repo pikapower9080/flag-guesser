@@ -122,7 +122,9 @@ function guessFor(country) {
         updateStat('flagsSeen', getStat('flagsSeen').push(country.code))
     }
     // Add correct option randomly
-    options.splice(Math.floor(Math.random() * options.length), 0, country.name)
+    const randomIndex = Math.floor(Math.random() * (options.length + 1));
+    options.splice(randomIndex, 0, country.name);
+
     options.forEach((option) => {
         let btn = document.createElement("button")
         btn.className = "option"
