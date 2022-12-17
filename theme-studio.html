@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A gallery of world flags used in the flag guesser game.">
+    <link rel="stylesheet" href="css/gallery.css">
+    <link rel="icon" href="./favicon.ico">
+    <script src="https://cdn.jsdelivr.net/npm/notiflix@3.2.5/dist/notiflix-loading-aio-3.2.5.min.js"></script>
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+    <link rel="manifest" href="./manifest.json">
+    <title>Flag Guesser - Theme Studio</title>
+    <style>
+        label[for] {
+            padding: 0px;
+            border: none;
+            border-radius: 0px;
+            cursor: default;
+            font-size: unset;
+            background-color: unset;
+            margin-right: 10px;
+        }
+        form {
+            text-align: left;
+        }
+        input[type='color'] {
+            height: 23px;
+        }
+        textarea {
+            width: 99%;
+            height: 250px;
+            resize: none;
+        }
+        textarea:disabled {
+            color: black;
+        }
+        label.checked {
+            background-color: var(--radio-selected-bg);
+            border-color: var(--radio-selected-border);
+            color: var(--radio-selected-color);
+        }
+        #examples {
+            background-color: var(--bg);
+            padding: 8px;
+            color: var(--text-color);
+        }
+        .secondary {
+            color: var(--secondary-text-color);
+        }
+        .btn-gray {
+            background-color: var(--gray-btn-color);
+            color: var(--text-color);
+        }
+        .btn-gray:hover {
+            background-color: var(--gray-btn-hover);
+        }
+        .option {
+            width: 50%;
+            display: block;
+            height: 50px;
+            transition: background 300ms;
+            border: var(--option-border-color) 1px solid;
+            background-color: var(--option-bg);
+            color: var(--text-color);
+        }
+        .option:hover {
+            background-color: var(--option-hover-bg);
+        }
+        #progress-container {
+            width: calc(100% - 85px);
+            height: 15px;
+            margin: 10px;
+            margin-inline: 25px;
+            border-radius: 20px;
+            background-color: var(--progress-bar-bg);
+        }
+        #progress-fill {
+            width: 0%;
+            height: 100%;
+            border-radius: 25px;
+            background-color: var(--progress-bar-color);
+            position: relative;
+            left: 0;
+            top: 0;
+            transition: width 200ms;
+        }
+        a, a:visited {
+            color: var(--link-color);
+        }
+    </style>
+</head>
+<body>
+    <h1>Theme Studio</h1>
+    <div class="card">
+        <h2>Preview</h2>
+        <div id="examples">
+            <p>Example text</p>
+            <p class="secondary">Secondary text</p>
+            <div class="card">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum, <a href="#">tempora?</a></p>
+                <fieldset>
+                    <legend>Options</legend>
+                    <label>Radio Button</label>
+                    <label class="checked">Radio Button</label>
+                </fieldset>
+            </div>
+            <button class="btn-gray">Gray Button</button>
+            <button class="option">Option</button>
+            <div id="progress-container">
+                <div id="progress-fill" style="width: 50%;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <h2>Colors</h2>
+        <form id="color-form">
+        </form>
+    </div>
+    <div class="card">
+        <h2>Output</h2>
+        <textarea id="output" disabled></textarea>
+    </div>
+    <script type="module">
+        import jsonFormat from 'https://cdn.skypack.dev/json-format';
+
+        function generateOutput() {
+            let data = {}
+            let elements = colorForm.querySelectorAll('input')
+            elements.forEach((element) => {
+                data[element.name] = element.value
+            })
+            return data
+        }
+
+        const colorForm = document.getElementById("color-form")
+        const example = document.getElementById("examples")
+        const colors = {
+            "bg": "#232323",
+            "text-color": "#FFFFFF",
+            "secondary-text-color": "#d1d1d1",
+            "option-bg": "#434343",
+            "option-hover-bg": "#303030",
+            "option-border-color": "#8a8a8a",
+            "progress-bar-color": "#1963bd",
+            "progress-bar-bg": "#636363",
+            "radio-bg": "#4D4D4D",
+            "radio-selected-bg": "#76EA5D",
+            "radio-selected-color": "#000000",
+            "radio-selected-border": "#44cc44",
+            "gray-btn-color": "#606060",
+            "gray-btn-hover": "#545454",
+            "card-border": "#626262",
+            "fieldset-border": "#6d6d6d",
+            "link-color": "#2BA7DE"
+        }
+
+        for (let color in colors) {
+            const newInput = document.createElement("input")
+            newInput.value = colors[color]
+            newInput.type = "color"
+            newInput.id = color
+            newInput.name = color
+            const newLabel = document.createElement("label")
+            newLabel.setAttribute("for", newInput.id)
+            newLabel.innerText = color + " "
+            colorForm.appendChild(newLabel)
+            colorForm.appendChild(newInput)
+            colorForm.appendChild(document.createElement("br"))
+            newInput.addEventListener("input", () => {
+                let jsonOutput = generateOutput()
+                output.value = jsonFormat(jsonOutput, {type:'space',size:4})
+                for (let property in jsonOutput) {
+                    if (property.startsWith('nx-')) continue
+                    example.style.setProperty(`--${property}`, jsonOutput[property])
+                }
+            })
+        }
+        for (let property in generateOutput()) {
+            if (property.startsWith('nx-')) continue
+            example.style.setProperty(`--${property}`, generateOutput()[property])
+        }
+        output.value = jsonFormat(generateOutput(), {type:'space',size:4})
+    </script>
+</body>
+</html>
