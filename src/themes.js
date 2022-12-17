@@ -32,6 +32,35 @@ export const themes = {
                 "messageColor": "#FFFFFF",
             }
         }
+    },
+    "dim": {
+        "bg": "#38393D",
+        "text-color": "#F0F0F0",
+        "secondary-text-color": "#D0D3D4",
+        "option-bg": "#515A5A",
+        "option-hover-bg": "#424949",
+        "option-border-color": "#8a8a8a",
+        "progress-bar-color": "#3498DB",
+        "progress-bar-bg": "#636363",
+        "radio-bg": "#4d4d4d",
+        "radio-selected-bg": "#76EA5D",
+        "gray-btn-color": "#606060",
+        "gray-btn-hover": "#545454",
+        "card-border": "#626262",
+        "fieldset-border": "#808B96",
+        "link-color": "#2874A6",
+        "nx-global": {
+            "messageColor": "#F0F0F0",
+            "backgroundColor": "#38393D",
+            "success": {
+                "titleColor": "#f0f0f0",
+                "messageColor": "#f0f0f0"
+            },
+            "failure": {
+                "titleColor": "#f0f0f0",
+                "messageColor": "#f0f0f0"
+            }
+        }
     }
 }
 
