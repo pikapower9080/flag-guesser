@@ -54,10 +54,12 @@ export function applyTheme(themeName) {
     reportOptions = newGlobalOptions
     newGlobalOptions['borderRadius'] = 10
     confirmOptions = newGlobalOptions
-    document.querySelector(`#s-${themeName}`).checked = true
+    try {
+        document.querySelector(`#s-popup-${getSetting('popup-animation')}`).checked = true
+        document.querySelector(`#s-${themeName}`).checked = true
+    } catch(e) {alert(e)}    
     document.querySelector("meta[name='theme-color']").content = theme.bg
 }
-
 export function resetTheme() {
     document.documentElement.setAttribute("style", "")
     confirmOptions = {plainText: false, borderRadius: 10, cssAnimationStyle: getSetting('popup-animation')}
