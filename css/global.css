@@ -10,6 +10,7 @@
     --radio-bg: #ddd;
     --radio-selected-bg: #bfb;
     --radio-selected-color: black;
+    --radio-selected-border: #44cc44;
     --fieldset-border: rgb(223, 220, 220);
 }
 
@@ -71,7 +72,7 @@ label {
 }
 input[type="radio"]:checked + label {
     background-color: var(--radio-selected-bg);
-    border-color: #4c4;
+    border-color: var(--radio-selected-border);
     color: var(--radio-selected-color);
 }
 
@@ -86,4 +87,13 @@ button {
 
 fieldset {
     border-color: var(--fieldset-border);
+}
+
+.ta-left {
+    text-align: left;
+}
+
+h3.small-margin {
+    margin-bottom: 3px;
+    margin-top: 3px;
 }
