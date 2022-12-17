@@ -55,10 +55,12 @@ export function applyTheme(themeName) {
     newGlobalOptions['borderRadius'] = 10
     confirmOptions = newGlobalOptions
     document.querySelector(`#s-${themeName}`).checked = true
+    document.querySelector("meta[name='theme-color']").content = theme.bg
 }
 
 export function resetTheme() {
     document.documentElement.setAttribute("style", "")
     confirmOptions = {plainText: false, borderRadius: 10, cssAnimationStyle: getSetting('popup-animation')}
     reportOptions = {plainText: false, cssAnimationStyle: getSetting('popup-animation')}
+    document.querySelector("meta[name='theme-color']").content = "#ededed"
 }
