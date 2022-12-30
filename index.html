@@ -36,7 +36,7 @@
                         class="fa-sharp fa-solid fa-fire"></i> Streak</label>
                 <input type="radio" name="mode" id="endless"><label for="endless" class="label-block"
                     id="endless-label"><i class="fa-solid fa-infinity"></i> Endless</label>
-                <fieldset id="questions-set" class="hidden" style="margin-top: 8px;">
+                <fieldset id="questions-set" class="hidden subset" data-requires="questions">
                     <legend>Number of questions:</legend>
                     <input type="radio" name="questions" id="q-5"><label for="q-5" class="label-block">5</label>
                     <input type="radio" name="questions" id="q-10" checked><label for="q-10"
@@ -47,10 +47,20 @@
                 </fieldset>
             </fieldset>
             <fieldset>
-                <legend>Number of options:</legend>
-                <input type="radio" name="options" id="opt-4" checked><label for="opt-4" class="label-block">4</label>
-                <input type="radio" name="options" id="opt-6"><label for="opt-6" class="label-block">6</label>
-                <input type="radio" name="options" id="opt-8"><label for="opt-8" class="label-block">8</label>
+                <legend>Answer Type</legend>
+                <input type="radio" name="answerType" id="multi" checked><label for="multi" class="label-block"><i class="fa-solid fa-list"></i> Multiple Choice</label>
+                <input type="radio" name="answerType" id="typing"><label for="typing" class="label-block"><i class="fa-solid fa-keyboard"></i> Typing</label>
+                <fieldset data-requires="multi" class="subset">
+                    <legend>Number of options:</legend>
+                    <input type="radio" name="options" id="opt-4" checked><label for="opt-4" class="label-block">4</label>
+                    <input type="radio" name="options" id="opt-6"><label for="opt-6" class="label-block">6</label>
+                    <input type="radio" name="options" id="opt-8"><label for="opt-8" class="label-block">8</label>
+                </fieldset>
+                <fieldset class="subset" data-requires="typing">
+                    <legend>Autocomplete:</legend>
+                    <input type="radio" name="autocomplete" id="autocomplete-on" checked><label for="autocomplete-on" class="label-block">Enabled</label>
+                    <input type="radio" name="autocomplete" id="autocomplete-off"><label for="autocomplete-off" class="label-block">Disabled</label>
+                </fieldset>
             </fieldset>
             <fieldset>
                 <legend>Difficulty:</legend>
@@ -114,7 +124,11 @@
         </div>
         <h2 id="streak-container"><i class="fa-sharp fa-solid fa-fire"></i> Streak: <span id="streak-num">0</span></h2>
         <img id="flag-svg" draggable="false" class="no-select">
-        <div id="options">
+        <div id="guessType-multi">
+        </div>
+        <div id="guessType-typing">
+            <form action="" id="typing-form"><input type="text" id="typing-input" list="countries-auto"></form>
+            <span id="correct-text" style="visibility: hidden;">Correct answer: <span class="value"></span></span>
         </div>
         <div id="difficulty-container">
             <span id="info-difficulty"><i class="fa-solid fa-glasses"></i> Difficultly: <span class="stat capitalize">??</span></span>
@@ -148,6 +162,7 @@
             </ul>
         </div>
     </div>
+    <datalist id="countries-auto"></datalist>
     <script defer src="dist/main.js"></script>
     <script>
         if ('serviceWorker' in navigator) {

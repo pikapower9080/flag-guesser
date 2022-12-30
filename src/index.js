@@ -34,6 +34,19 @@ let unsavedChanges = false
 const progressBar = document.getElementById("progress-fill")
 const streakNum = document.getElementById("streak-num")
 const streakContainer = document.getElementById("streak-container")
+const typingForm = document.getElementById("typing-form")
+const typingInput = document.getElementById("typing-input")
+const correctText = document.getElementById("correct-text")
+
+typingForm.addEventListener("submit", (e) => {
+    e.preventDefault()
+})
+
+const correctFunctions = {
+    correctQuestions: () => {
+
+    }
+}
 
 function showUserError(errorM) {
     Loading.remove()
@@ -85,7 +98,36 @@ function getFlagUrl(country) {
 
 const guessScreen = document.getElementById("guess")
 const flagSvg = document.getElementById("flag-svg")
-const optionsDiv = document.getElementById("options")
+const optionsDiv = document.getElementById("guessType-multi")
+
+const answerTypes = []
+document.querySelectorAll("input[name='answerType']").forEach((element) => {
+    answerTypes.push(element.id)
+})
+function showAnswerMode(answerType) {
+    answerTypes.forEach(element => {
+        element = document.getElementById("guessType-" + element)
+        element.style.display = "none"
+    })
+    let answerDiv = document.querySelector(`#guessType-${answerType}`)
+    if (answerDiv) {
+        answerDiv.setAttribute("style", "")
+    }
+}
+
+function moveOn(country) {
+    questionNum++
+    progressBarPercent = (100 * questionNum) / questionCount
+    progressBar.style.width = progressBarPercent + "%"
+    previousCountry = country
+    incrementStat('totalQuestions')
+    incrementGameStat('totalQuestions')
+    if (questionNum + 1 > questionCount && userOptions.mode == "questions") {
+        unsavedChanges = false; return showEndScreen(userOptions.mode, streak, score, userOptions.questions)
+    } else {
+        guessFor(randomCountry())
+    }
+}
 
 function guessFor(country) {
     let options = []
@@ -94,8 +136,7 @@ function guessFor(country) {
         guessFor(randomCountry())
         return
     }
-    flagSvg.src = getFlagUrl(country)
-    clearOptions()
+    flagSvg.src = getFlagUrl(country)        
     function pick() {
         const rCountry = randomCountry()
         if (options.includes(rCountry.name) || rCountry.name == country.name) { // No duplicates!
@@ -105,8 +146,118 @@ function guessFor(country) {
         }
         options.push(rCountry.name)
     }
-    for (let i = 0; i < optionCount - 1; i++) {
-        pick()
+    function processCanContinue() {
+        canContinue = false
+        setTimeout(() => {
+            canContinue = true
+        }, 370)
+    }
+    function streakIncorrect() {
+        if (userOptions.mode == "streak") {
+            if (!canContinue) return
+            processCanContinue()
+            incrementStat('totalQuestions')
+            incrementGameStat('totalQuestions')
+            incrementStat('totalIncorrect')
+            incrementGameStat('totalIncorrect')
+            if (getStat('streak') < streak) {
+                updateStat('streak', streak)
+            }
+            unsavedChanges = false; return showEndScreen(userOptions.mode, streak, score, userOptions.questions, country.name)
+        }
+    }
+    if (userOptions.answerType == "multi") {
+        clearOptions()
+        for (let i = 0; i < optionCount - 1; i++) {
+            pick()
+        }
+        // Add correct option randomly
+        const randomIndex = Math.floor(Math.random() * (options.length + 1));
+        options.splice(randomIndex, 0, country.name);
+        options.forEach((option) => {
+            let btn = document.createElement("button")
+            btn.className = "option"
+            btn.innerText = option
+            optionsDiv.appendChild(btn)
+            function onBtnClick() {
+                if (btn.getAttribute("clicked")) return
+                if (option == country.name) { // YAY IT'S CORRECT!!!! LET'S GO!!!
+                    streak++
+                    streakNum.innerText = streak
+                    Report.success("Correct!", userOptions.mode == "streak" ? strings.streakCorrectMessages[Math.floor(Math.random() * strings.streakCorrectMessages.length)].replaceAll("%%", streak) : "", "Next Question", () => {
+                        if (!canContinue) return
+                        processCanContinue()
+                        incrementStat('totalCorrect')
+                        incrementGameStat('totalCorrect')
+                        if (userOptions.mode == "streak") {
+                            if (getStat('streak') < streak) {
+                                updateStat('streak', streak)
+                            }
+                        }
+                        score++
+                        moveOn(country)
+                    }, reportOptions)
+                } else { // YOU'RE WRONG XD GET TROLLED
+                    if (userOptions.mode == "streak") {
+                        streakIncorrect()
+                    } else {
+                        Report.failure("Incorrect", strings.incorrectEndlessMessages[Math.floor(Math.random() * strings.incorrectEndlessMessages.length)].replaceAll("%%", '<b>' + country.name + '</b>'), "Next Question", () => {
+                            if (!canContinue) return
+                            processCanContinue()
+                            incrementStat('totalIncorrect')
+                            incrementGameStat('totalIncorrect')
+                            moveOn(country)
+                            previousCountry = country
+                        }, reportOptions)
+                    }
+                }
+                btn.setAttribute("clicked", true)
+            }
+            btn.addEventListener("click", onBtnClick)
+        })
+    } else if (userOptions.answerType == "typing") {
+        const formListener = () => {
+            const guess = typingInput.value
+            if (guess === "") return // Mistake failsafe
+            typingInput.value = ""
+            typingInput.focus()
+            if (guess.toLowerCase().trim() === country.name.toLowerCase().trim()) {
+                // Typing correct
+                typingInput.classList.add("correct")
+                streak++
+                streakNum.innerText = streak                    
+                incrementStat('totalCorrect')
+                incrementGameStat('totalCorrect')
+                if (userOptions.mode == "streak") {
+                    if (getStat('streak') < streak) {
+                        updateStat('streak', streak)
+                    }
+                }
+                score++
+                setTimeout(() => {
+                    typingInput.classList.remove("correct")
+                    moveOn()
+                }, 600)
+            } else {
+                // Typing incorrect
+                typingInput.classList.add("incorrect")
+                correctText.style.visibility = "visible"
+                correctText.querySelector(".value").innerText = country.name
+                setTimeout(() => {
+                    correctText.style.visibility = "hidden"
+                    typingInput.classList.remove("incorrect")
+                    if (userOptions.mode == "streak") {
+                        streakIncorrect()
+                    } else {
+                        incrementStat('totalIncorrect')
+                        incrementGameStat('totalIncorrect')
+                        moveOn()
+                    }
+                }, 600)
+            }
+            typingForm.removeEventListener("submit", formListener)
+        }
+        typingForm.addEventListener("submit", formListener)
     }
     try {
         if (!getStat('flagsSeen').includes(country.code)) {
@@ -121,78 +272,6 @@ function guessFor(country) {
     if (!getStat('flagsSeen').includes(country.code)) {
         updateStat('flagsSeen', getStat('flagsSeen').push(country.code))
     }
-    // Add correct option randomly
-    const randomIndex = Math.floor(Math.random() * (options.length + 1));
-    options.splice(randomIndex, 0, country.name);
-
-    options.forEach((option) => {
-        let btn = document.createElement("button")
-        btn.className = "option"
-        btn.innerText = option
-        optionsDiv.appendChild(btn)
-        function moveOn() {
-            questionNum ++
-            progressBarPercent = (100 * questionNum) / questionCount
-            progressBar.style.width = progressBarPercent + "%"
-            previousCountry = country
-            incrementStat('totalQuestions')
-            incrementGameStat('totalQuestions')
-            if (questionNum + 1 > questionCount && userOptions.mode == "questions") {
-                unsavedChanges = false; return showEndScreen(userOptions.mode, streak, score, userOptions.questions)
-            } else {
-                guessFor(randomCountry())
-            }
-        }
-        function processCanContinue() {
-            canContinue = false
-            setTimeout(() => {
-                canContinue = true
-            }, 370)
-        }
-        function onBtnClick() {
-            if (btn.getAttribute("clicked")) return
-            if (option == country.name) { // YAY IT'S CORRECT!!!! LET'S GO!!!
-                streak ++
-                streakNum.innerText = streak
-                Report.success("Correct!", userOptions.mode == "streak" ? strings.streakCorrectMessages[Math.floor(Math.random() * strings.streakCorrectMessages.length)].replaceAll("%%", streak) : "", "Next Question", () => {
-                    if (!canContinue) return
-                    processCanContinue()
-                    incrementStat('totalCorrect')
-                    incrementGameStat('totalCorrect')
-                    if (userOptions.mode == "streak") {
-                        if (getStat('streak') < streak) {
-                            updateStat('streak', streak)
-                        }
-                    }
-                    score ++
-                    moveOn()
-                }, reportOptions)
-            } else { // YOU'RE WRONG XD GET TROLLED
-                if (userOptions.mode == "streak") {
-                    if (!canContinue) return
-                    processCanContinue()
-                    incrementStat('totalQuestions')
-                    incrementGameStat('totalQuestions')
-                    incrementStat('totalIncorrect')
-                    incrementGameStat('totalIncorrect')
-                    if (getStat('streak') < streak) {
-                        updateStat('streak', streak)
-                    }
-                    unsavedChanges = false; return showEndScreen(userOptions.mode, streak, score, userOptions.questions, country.name)
-                }
-                Report.failure("Incorrect", strings.incorrectEndlessMessages[Math.floor(Math.random() * strings.incorrectEndlessMessages.length)].replaceAll("%%", '<b>' + country.name + '</b>'), "Next Question", () => {
-                    if (!canContinue) return
-                    processCanContinue()
-                    incrementStat('totalIncorrect')
-                    incrementGameStat('totalIncorrect')
-                    moveOn()
-                    previousCountry = country
-                }, reportOptions)
-            }
-            btn.setAttribute("clicked", true)
-        }
-        btn.addEventListener("click", onBtnClick)
-    })
 }
 
 function start() {
@@ -202,6 +281,7 @@ function start() {
     console.log("Data url: " + getDataUrl())
     console.log("Option count: " + optionCount)
     incrementStat('totalGames')
+    showAnswerMode(userOptions.answerType)
     unsavedChanges = true
     if (userOptions.mode !== "questions") {
         progressBar.parentElement.style.display = "none"
@@ -213,6 +293,12 @@ function start() {
     } else {
         streakContainer.style.display = "block"
     }
+    if (userOptions.autocomplete == "autocomplete-on") {
+        typingInput.setAttribute("list", "countries-auto")
+    } else {
+        typingInput.setAttribute("list", "")
+    }
+    typingInput.value = ""
     updateGameStat('difficulty', userOptions.difficulty)
     updateGameStat('questions', userOptions.questions.split("q-")[1])
     document.querySelector("#info-difficulty > span").innerText = userOptions.difficulty
@@ -222,6 +308,20 @@ function start() {
         Loading.change('Parsing data...')
         res.json().then((fetchedData) => {
             data = fetchedData
+            const autocomplete = document.getElementById("countries-auto")
+            autocomplete.querySelectorAll("option").forEach((element) => {
+                element.remove()
+            })
+            data.forEach(country => {
+                let element = document.createElement("option")
+                element.value = country.name
+                autocomplete.appendChild(element)
+            })
+            if (userOptions.answerType == "typing") {
+                setTimeout(() => {
+                    typingInput.focus()
+                }, 300)
+            }
             Loading.remove()
             hideAllScreens()
             guessScreen.style.display = "unset"

@@ -13,6 +13,8 @@
     --link-color: #2e2ef1;
     --gray-btn-color: rgb(212, 212, 212);
     --gray-btn-hover: rgb(197, 196, 196);
+    --text-input-correct-outline: #1cda1f;
+    --text-input-incorrect-outline: #e50808;
 }
 
 @import url('popup.less');
@@ -49,7 +51,7 @@ a:visited {
     padding: 20px;
 }
 
-#options {
+#guessType-multi {
     column-count: 2;
     width: 100vw;
     left: 0;
@@ -104,7 +106,7 @@ ul {
 }
 
 @media (max-width: 610px) {
-   #options {
+   #guessType-multi {
     column-count: 1;
    }
 }
@@ -150,4 +152,37 @@ ul {
 #view-flag-btn {
     cursor: pointer;
     transform: scale(0.85);
+}
+
+fieldset.subset {
+    margin-top: 8px;
+}
+
+#typing-input {
+    background-color: transparent;
+    outline: solid 1px var(--option-border-color);
+    border: none;
+    color: var(--text-color);
+    font-size: 1.5rem;
+}
+#typing-input:focus {
+    outline: var(--option-border-color) 2px solid;
+    border: none;
+    transition: outline-color 300ms;
+}
+#typing-input.correct {
+    outline: var(--text-input-correct-outline) 2px solid;
+}
+#typing-input.incorrect {
+    outline: var(--text-input-incorrect-outline) 2px solid;
+}
+#correct-text {
+    color: var(--text-input-incorrect-outline);
+    text-align: center;
+    display: block;
+    margin-top: 5px;
+    font-weight: bold;
+    .value {
+        font-weight: bolder;
+    }
 }

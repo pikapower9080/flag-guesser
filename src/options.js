@@ -25,7 +25,7 @@ radios.forEach((input) => {
         input.addEventListener('input', () => {
             userOptions[input.name] = input.id
             console.debug(userOptions)
-            document.getElementById("questions-set").classList.toggle("hidden", !document.getElementById("questions").checked)
+            processSubSets()
         })
         if (!userOptions[input.name]) {
             userOptions[input.name] = document.querySelector(`input[name='${input.name}']:checked`).id
@@ -62,10 +62,25 @@ if (!loadSettings()) {
             console.log("Adding newly added setting " + k + ", this should only appear once.")
             loadedSettings[k] = userSettings[k]
             saveSettings(loadedSettings)
+            processSubSets()
         }
     }
     userSettings = loadedSettings
 }
 applyTheme(userSettings.theme)
 
-document.getElementById("questions-set").classList.toggle("hidden", !document.getElementById("questions").checked)
+function processSubSets() {
+    document.querySelectorAll('fieldset.subset[data-requires]').forEach((subset) => {
+        if (subset.dataset.requires) {
+            if (document.getElementById(subset.dataset.requires) && document.getElementById(subset.dataset.requires).type == "radio") {
+                if (document.getElementById(subset.dataset.requires).checked) {
+                    subset.classList.remove("hidden")
+                } else {
+                    subset.classList.add("hidden")
+                }
+            }
+        }
+    })
+}
+
+processSubSets()
