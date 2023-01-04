@@ -61,67 +61,6 @@ export const themes = {
                 "messageColor": "#f0f0f0"
             }
         }
-    },
-    "usa": {
-        "bg": "#ededed",
-        "text-color": "#000000",
-        "secondary-text-color": "#725be1",
-        "option-bg": "#D6EAF8",
-        "option-hover-bg": "#AED6F1",
-        "option-border-color": "#2980B9",
-        "progress-bar-color": "#cc0f0f",
-        "progress-bar-bg": "#bfbfbf",
-        "radio-bg": "#e9dddd",
-        "radio-selected-bg": "#c44040",
-        "radio-selected-color": "#ffffff",
-        "radio-selected-border": "#ff3d3d",
-        "gray-btn-color": "#d6d6d6",
-        "gray-btn-hover": "#c2c2c2",
-        "card-border": "#b0b0b0",
-        "fieldset-border": "#a3a3a3",
-        "link-color": "#2b88b1",
-        "nx-global": {
-            "cancelButtonBackground": "#cc0f0f",
-            "okButtonBackground": "#725be1",
-            "titleColor": "#725be1",
-            "success": {
-                "messageColor": "#000000",
-                "buttonBackground": "#E74C3C"
-            },
-            "failure": {
-                "titleColor": "#cc0f0f",
-                "messageColor": "#000000",
-                "buttonBackground": "#E74C3C"
-            }
-        }
-    },
-    "ireland": {
-        "bg": "#ededed",
-        "text-color": "#000000",
-        "secondary-text-color": "#ff8438",
-        "option-bg": "#f0b27a",
-        "option-hover-bg": "#dda169",
-        "option-border-color": "#b87d00",
-        "progress-bar-color": "#ff7b38",
-        "progress-bar-bg": "#c9c9c9",
-        "radio-bg": "#d4d4d4",
-        "radio-selected-bg": "#1fc765",
-        "radio-selected-color": "#000000",
-        "radio-selected-border": "#146114",
-        "gray-btn-color": "#d1d1d1",
-        "gray-btn-hover": "#c7c7c7",
-        "card-border": "#bababa",
-        "fieldset-border": "#b1d2b8",
-        "link-color": "#2ba7de",
-        "nx-global": {
-            "okButtonBackground": "#ff7b38",
-            "success": {
-                "buttonBackground": "#ff7b38"
-            },
-            "failure": {
-                "buttonBackground": "#ff7b38"
-            }
-        }
     }
 }
 
