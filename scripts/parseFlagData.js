@@ -2,7 +2,7 @@
 
 const fs = require('fs')
 
-const filePath = "data/normal.json"
+const filePath = "data/expert.json"
 
 const fileData = fs.readFileSync(filePath)
 const data = JSON.parse(fileData)
@@ -12,7 +12,8 @@ data.forEach((country) => {
     newData.push({
         name: country.name,
         code: country.code,
-        image: country.image.split('/')[7]
+        image: country.image.split('/')[7],
+        alt: country.alt
     })
 })
 

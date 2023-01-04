@@ -42,10 +42,15 @@ typingForm.addEventListener("submit", (e) => {
     e.preventDefault()
 })
 
-const correctFunctions = {
-    correctQuestions: () => {
-
+function checkAnswer(answer, country) {
+    let validAnswers = []
+    validAnswers.push(country.name.toLowerCase())
+    if ('alt' in country) {
+        country.alt.forEach((alt) => {
+            validAnswers.push(alt.toLowerCase())
+        })
     }
+    return validAnswers.includes(answer.toLowerCase().trim())
 }
 
 function showUserError(errorM) {
@@ -181,7 +186,7 @@ function guessFor(country) {
             optionsDiv.appendChild(btn)
             function onBtnClick() {
                 if (btn.getAttribute("clicked")) return
-                if (option == country.name) { // YAY IT'S CORRECT!!!! LET'S GO!!!
+                if (checkAnswer(option, country)) { // YAY IT'S CORRECT!!!! LET'S GO!!!
                     streak++
                     streakNum.innerText = streak
                     Report.success("Correct!", userOptions.mode == "streak" ? strings.streakCorrectMessages[Math.floor(Math.random() * strings.streakCorrectMessages.length)].replaceAll("%%", streak) : "", "Next Question", () => {
@@ -221,7 +226,7 @@ function guessFor(country) {
             if (guess === "") return // Mistake failsafe
             typingInput.value = ""
             typingInput.focus()
-            if (guess.toLowerCase().trim() === country.name.toLowerCase().trim()) {
+            if (checkAnswer(guess, country)) {
                 // Typing correct
                 typingInput.classList.add("correct")
                 streak++
