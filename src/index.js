@@ -94,6 +94,9 @@ function returnToHome() {
 }
 
 function getFlagUrl(country) {
+    if (userOptions.set == "us-states") {
+        return 'flags/state/' + country.code + '.png'
+    }
     if (useFallback.includes(country.code)) {
         return flagFallbackUrlStart + country.image
     } else {
@@ -265,17 +268,16 @@ function guessFor(country) {
         typingForm.addEventListener("submit", formListener)
     }
     try {
-        if (!getStat('flagsSeen').includes(country.code)) {
-            let newStat = getStat('flagsSeen')
-            newStat.push(country.code)
-            updateStat('flagsSeen', newStat)
+        if (userOptions.set != "us-states") {
+            if (!getStat('flagsSeen').includes(country.code)) {
+                let newStat = getStat('flagsSeen')
+                newStat.push(country.code)
+                updateStat('flagsSeen', newStat)
+            }
         }
     } catch(errorM) {
         console.error("Failed to update statistics!")
         console.error(errorM)
-    }
-    if (!getStat('flagsSeen').includes(country.code)) {
-        updateStat('flagsSeen', getStat('flagsSeen').push(country.code))
     }
 }
 
@@ -304,9 +306,9 @@ function start() {
         typingInput.setAttribute("list", "")
     }
     typingInput.value = ""
-    updateGameStat('difficulty', userOptions.difficulty)
+    updateGameStat('difficulty', userOptions.set)
     updateGameStat('questions', userOptions.questions.split("q-")[1])
-    document.querySelector("#info-difficulty > span").innerText = userOptions.difficulty
+    document.querySelector("#info-difficulty > span").innerText = userOptions.set.replace("-", " ")
     streakNum.innerText = streak
     Loading.circle('Fetching data...')
     fetch(getDataUrl()).then((res) => {

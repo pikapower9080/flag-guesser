@@ -7,7 +7,7 @@ const config = {
         path: path.resolve(__dirname, 'dist'),
         filename: 'main.js',
     },
-    devtool: false,
+    devtool: 'inline-source-map',
     module: {
         rules: [
             {

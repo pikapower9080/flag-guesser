@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 
-let directories = ['icons', 'data', 'css', 'dist', 'flags']
+let directories = ['icons', 'data', 'css', 'dist', 'flags', 'flags/state']
 let list = ['/', 'gallery.html', 'manifest.json', 'https://fonts.googleapis.com/css2?family=Alexandria:wght@500&family=Open+Sans&display=swap', 'https://fonts.gstatic.com/s/opensans/v34/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsjZ0B4gaVI.woff2', 'fontawesome/css/fontawesome.min.css', 'fontawesome/css/solid.css', 'fontawesome/webfonts/fa-solid-900.woff2', 'fontawesome/webfonts/fa-solid-900.ttf']
 
 directories.forEach((directory) => {

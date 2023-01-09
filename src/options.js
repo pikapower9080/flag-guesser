@@ -34,7 +34,7 @@ radios.forEach((input) => {
 })
 
 export function  getDataUrl() {
-    return `data/${userOptions.difficulty}-opt.json`
+    return `data/${userOptions.set}-opt.json`
 }
 
 export function getUserOptions() {
