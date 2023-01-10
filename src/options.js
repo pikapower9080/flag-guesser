@@ -34,6 +34,7 @@ radios.forEach((input) => {
 })
 
 export function  getDataUrl() {
+    if (userOptions.set == "us-states-by-map") return 'data/us-states-opt.json'
     return `data/${userOptions.set}-opt.json`
 }
 

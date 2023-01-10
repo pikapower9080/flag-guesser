@@ -64,7 +64,7 @@ export function showEndScreen(gameMode, streak = 0, score = 0, maxScore = 0, cor
     for (let statId in gameStatistics) {
         let statElement = document.getElementById('tg-' + statId)
         if (statElement) {
-            statElement.querySelector(".stat").innerText = gameStatistics[statId]
+            statElement.querySelector(".stat").innerText = gameStatistics[statId].toString().replaceAll("-", " ")
         }
     }
     document.getElementById("tsg-playtime").querySelector(".stat").innerText = formatSeconds(gameStatistics.playtime)

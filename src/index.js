@@ -97,6 +97,9 @@ function getFlagUrl(country) {
     if (userOptions.set == "us-states") {
         return 'flags/state/' + country.code + '.png'
     }
+    if (userOptions.set == "us-states-by-map") {
+        return `flags/state/maps/${country.code}.png`
+    }
     if (useFallback.includes(country.code)) {
         return flagFallbackUrlStart + country.image
     } else {
@@ -268,7 +271,7 @@ function guessFor(country) {
         typingForm.addEventListener("submit", formListener)
     }
     try {
-        if (userOptions.set != "us-states") {
+        if (userOptions.set != "us-states" && userOptions.set != "us-states-by-map") {
             if (!getStat('flagsSeen').includes(country.code)) {
                 let newStat = getStat('flagsSeen')
                 newStat.push(country.code)
@@ -308,7 +311,7 @@ function start() {
     typingInput.value = ""
     updateGameStat('difficulty', userOptions.set)
     updateGameStat('questions', userOptions.questions.split("q-")[1])
-    document.querySelector("#info-difficulty > span").innerText = userOptions.set.replace("-", " ")
+    document.querySelector("#info-difficulty > span").innerText = userOptions.set.replaceAll("-", " ")
     streakNum.innerText = streak
     Loading.circle('Fetching data...')
     fetch(getDataUrl()).then((res) => {
