@@ -85,3 +85,11 @@ function processSubSets() {
 }
 
 processSubSets()
+
+for (let k in userSettings) {
+    var settingValue = userSettings[k]
+    const selector = `input[value="${settingValue}"]`
+    if (document.querySelector(selector)) {
+        document.querySelector(selector).checked = true
+    }
+}

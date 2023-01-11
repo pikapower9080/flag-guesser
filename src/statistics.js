@@ -2,6 +2,7 @@ import { hideAllScreens } from "./index"
 import { Confirm } from 'notiflix/build/notiflix-confirm-aio'
 import { confirmOptions, reportOptions } from "./themes"
 import { Report } from "notiflix"
+import { getSetting } from "./options"
 
 let statistics = {
     streak: 0,
@@ -34,6 +35,7 @@ export function getStat(statName) {
 }
 
 export function updateStat(statName, newValue) {
+    if (getSetting('practice') === "practice-on") return
     statistics[statName] =  newValue
     saveStats(statistics)
 }

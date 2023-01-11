@@ -1,7 +1,7 @@
 import { Report } from 'notiflix/build/notiflix-report-aio';
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
 import { Confirm } from 'notiflix/build/notiflix-confirm-aio';
-import { getDataUrl, getUserOptions } from './options';
+import { getDataUrl, getSetting, getUserOptions } from './options';
 import { incrementStat, updateStat, getStat, incrementGameStat, showEndScreen, updateGameStat } from './statistics';
 import './tooltips'
 import './options'
@@ -286,6 +286,9 @@ function guessFor(country) {
 
 function start() {
     userOptions = getUserOptions()
+    if (getSetting('practice') === "practice-on") {
+        Confirm.show("Practice Mode", "Your stats won't count while playing in practice mode. Check your settings to disable it.", "Ok", undefined, undefined, undefined, confirmOptions)
+    }
     optionCount = userOptions.options.split("opt-")[1]
     questionCount = userOptions.questions.split("q-")[1]
     console.log("Data url: " + getDataUrl())
